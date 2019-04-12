@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>AddressBook Level 4 - Developer Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Recruit Me - Developer Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level3">AB-3</a></li><li class="nav-item"><a class="nav-link active" href="index.html">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">AddressBook-Level4</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/se-edu/addressbook-level4"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>AddressBook Level 4 - Developer Guide</h1></div><div id="content"><div id="preamble">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level3">AB-3</a></li><li class="nav-item"><a class="nav-link active" href="index.html">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">AddressBook-Level4</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/se-edu/addressbook-level4"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Recruit Me - Developer Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+<p>By: <code>RecruitMe</code>      Since: <code>January 2019</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -30,9 +30,12 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#filter-or-and-clear-feature">3.2. Filter or/and/clear feature</a></li>
+<li><a href="#sort-commands">3.3. Sort Commands</a></li>
+<li><a href="#endorse-command">3.4. Endorse Command</a></li>
+<li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -68,7 +71,7 @@
 <li><a href="#GetStartedProgramming-RemarkCommand">A.2. Creating a new command: <code>remark</code></a></li>
 </ul>
 </li>
-<li><a href="#product-scope">Appendix B: Product Scope</a></li>
+<li><a href="#product-scope-target-user-profile">Appendix B: Product Scope - Target user profile</a></li>
 <li><a href="#user-stories">Appendix C: User Stories</a></li>
 <li><a href="#use-cases">Appendix D: Use Cases</a></li>
 <li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
@@ -92,7 +95,7 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>JDK <code>8</code></strong> (revision <code>1.8.0_201</code> or later)</p>
+<p><strong>JDK <code>9</code></strong> (revision <code>1.9.4</code> or later)</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -100,8 +103,8 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Only JDK 8 is supported.<br>
-This app will not work with later major JDK releases such as JDK 9, 10, 11, etc.
+Only JDK 9 is supported.<br>
+This app will not work with later major JDK releases such as JDK 10, 11, etc.
 </td>
 </tr>
 </table>
@@ -753,20 +756,503 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></h3>
+<h3 id="filter-or-and-clear-feature"><a class="link" href="#filter-or-and-clear-feature">3.2. Filter or/and/clear feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/filterDiagram.png" alt="filterDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Sequence Diagram of the Filtering Command</div>
+<p>Filtering mechanism is facilitated by <code>AddressBook</code>.
+In the AddressBook class, we have added a new <code>UniquePersonsList</code> parameter called <code>allPersonsStorage</code> and this parameter stores also the persons in the application.
+When the filtering method is used, the <code>persons</code> parameter in the class is updated according to the filtering criterion (the persons that are not matching the conditions are removed)
+but the list in the new parameter <code>allPersonsStorage</code> are not changed. At the end, when the filtering is cleared, the <code>persons</code> parameter is updated with the information in <code>allPersonsStorage</code>.
+If user exits the program when filtering is active, in the <code>stop</code> method of <code>MainApp</code> class, a new method is called that clears the filtering and saves all the persons to the <code>JSON</code> file, rather than filtered contacts.
+In filtering system, important processes are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter or [CRITERION]</code>&#8201;&#8212;&#8201;Filters the persons and includes the ones that has at least one match from the criterion.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Every single one of the persons in the <code>persons</code> parameter is traversed.
+There is a flag that returns true for each person, if a criteria matches. For each criteria,
+the persons are investigated with contains method in a case insensitive manner. With case insensitivity,
+if one of the criterion is <code>Ale</code> for the name parameter, every person that contains <code>Ale</code> in their names are
+selected.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter and [CRITERION]</code>&#8201;&#8212;&#8201;Filters the persons and removes the ones that does not match even one of the criterion.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Every single one of the persons in the <code>persons</code> parameter is traversed.
+There is a flag that returns false for each person, if a criteria does not match. For each criteria,
+the persons are investigated with contains method in a case insensitive manner. With case insensitivity,
+if one of the criterion is <code>Ale</code> for the name parameter, every person that contains <code>Ale</code> in their names are
+passed successfully from the name criteria.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter clear</code>&#8201;&#8212;&#8201;Clears all the filtering that are active in current case</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As explained in the beginning part of the filtering method, the filter is cleared with restoring all the persons
+who are not in <code>persons</code> parameter but included in <code>allPersonsStorage</code> parameter</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="working-principle-of-code-filtercommandparser-code-class"><a class="link" href="#working-principle-of-code-filtercommandparser-code-class">3.2.2. Working Principle of <code>FilterCommandParser</code> Class</a></h4>
+<div class="paragraph">
+<p>Filtering command is taken from the user as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter or/and [n/NAME/n] [p/PHONE/p] [e/EMAIL/e] [g/GPA/g] [d/EDUCATION/d] [a/ADDRESS/a] [skill/ SKILL1, SKILL2, …​ /skill] [position/ POSITION1, POSITION2, &#8230;&#8203; /position]</code></p>
+</li>
+<li>
+<p><code>filter clear</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To process the input from user, these steps are followed in the code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>first the input is cleared from multiple spaces or any unwanted additional forms.</p>
+</li>
+<li>
+<p>after that according to the first couple of the characters, the exact process is determined (If it is <code>add</code> or <code>or</code> or <code>clear</code>)</p>
+</li>
+<li>
+<p>if it is clear, the FilterCommand function is called fo that method. If it is not, followings take place.</p>
+</li>
+<li>
+<p>following that, the prefixes are searched. 5 flags are stored in <code>String</code> form for 5 different filtering conditions and
+if the prefix itself exists and the reverse version also exist and the prefix itself is before the reverse one the flag is turned
+to <code>available</code></p>
+</li>
+<li>
+<p>for the available parameters, the input is trimmed and separated from the prefixes. If the parameters does not match with the validity of the given type of the criteria,
+a message is printed to the screen and no action is made.</p>
+</li>
+<li>
+<p>FilterCommand function is called. In the parameters passed to the function, the process type, criterion flags and criterion contexts are included.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="alternative-approaches"><a class="link" href="#alternative-approaches">3.2.3. Alternative Approaches</a></h4>
+<div class="paragraph">
+<p>In this title, both Command implementation and Parser implementation will be discussed in 2 parts:</p>
+</div>
+<div class="sect4">
+<h5 id="command-implementation"><a class="link" href="#command-implementation">Command Implementation</a></h5>
+<div class="paragraph">
+<p>Instead of adding another parameter in <code>AddressBook</code> called <code>allPersonsStorage</code>, another approach would be letting <code>persons</code> parameter to hold
+all the unfiltered information and updating <code>filteredPersons</code> parameter in the <code>ModelManager</code> class. However, in order to implement that approach
+we had to update the list in every time user uses filtering with a <code>Predicate</code> approach. Because, <code>FilteredList</code> class (the type of the <code>filteredPersons</code>
+parameter) uses these in very crucial parts of its implementation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Pros of this approach:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Does not need any additional parameter to be created in AddressBook class.</p>
+</li>
+<li>
+<p>Decreases the number of changes made in each list changing method of the AddressBook class. Because, if any additional
+parameter is added to AddressBook class, all the functions have to be changed considering the new parameter.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Cons of this approach:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It is hard and time consuming to implement this approach. Actually that&#8217;s why we did not choose that approach.</p>
+</li>
+<li>
+<p>It may require some changes in the <code>Model</code> class.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="parser-implementation"><a class="link" href="#parser-implementation">Parser Implementation</a></h5>
+<div class="paragraph">
+<p>Instead of putting the criterion contents between both prefixes and reverse prefixes, like the addition process we
+could only add the content after the prefix (without any reverse prefix usage).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Pros of this approach:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>User would need to write less number of characters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Cons of this approach:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Using also reverse prefix makes the job much easier, because it simply marks also the end of the content.</p>
+</li>
+<li>
+<p>In currently implemented version, no order of the criterion is necessary. So, first phone number and then name etc. can be added for filtering condition.
+However in the alternative approach, implementing the input taking with no order is harder.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.4. Combining the Command With Other Commands</a></h4>
+<div class="paragraph">
+<p>Since a new parameter is added to the <code>AddressBook</code> class, some changes should have done to adjust the existing processes to
+be used at the same time with filtering commands.</p>
+</div>
+<div class="sect4">
+<h5 id="undo-redo-command"><a class="link" href="#undo-redo-command">Undo/Redo Command</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>To save the filtering information at each step, a new list is created to hold the filtering information at current stage (active or not)
+whenever the current AddressBook is pushed to the list.</p>
+</li>
+<li>
+<p><code>resetData</code> method is modified in order to reset the <code>allPersonsStorage</code> parameter if needed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="add-edit-and-delete-commands"><a class="link" href="#add-edit-and-delete-commands">Add, Edit and Delete Commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>commit</code> method is modified for transferring the filtering information to the stage after committing is made and also the filtering information is pushed to the list here</p>
+</li>
+<li>
+<p><code>delete</code> and <code>edit</code> processes are working without clearing the filter.</p>
+</li>
+<li>
+<p><code>add</code> method clears the filter when a new person is added. Because, all the previous filtering are not saved in anywhere, so we cannot control if the newly added person matches
+with the filtering criterion. Thus, all the filtering is cleared.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="other-commands"><a class="link" href="#other-commands">Other Commands</a></h5>
+<div class="paragraph">
+<p>These are the ones that requires almost no changes or only small amount of changes to be compatible with filtering.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.5. Testing of Filter Command Design</a></h4>
+<div class="paragraph">
+<p>The testing methods for filtering is written for 3 different parts:</p>
+</div>
+<div class="sect4">
+<h5 id="filtercommandparsertests"><a class="link" href="#filtercommandparsertests">FilterCommandParserTests</a></h5>
+<div class="paragraph">
+<p>Currently implemented test cases are below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>for missing parts of the input by the user, a test method runs. This method covers the situations where process type or field parameter or both are missing.</p>
+</li>
+<li>
+<p>second test method includes the cases where the prefix itself and the reverse prefix does not match with each other.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For future release test cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Division of the unordered input for different criterion will be tested</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="filtercommandtests"><a class="link" href="#filtercommandtests">FilterCommandTests</a></h5>
+<div class="paragraph">
+<p>This test class is prepared for unit testing of Filtering Command. Currently implemented test cases are below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>executing filtering with only 1 condition</p>
+</li>
+<li>
+<p>executing filtering with multiple conditions</p>
+</li>
+<li>
+<p>executing filtering with all the criterion are given</p>
+</li>
+<li>
+<p>clearing the filtering when one filter is active</p>
+</li>
+<li>
+<p>clearing the filtering when multiple filters are active</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="filtercommandintegrationtests"><a class="link" href="#filtercommandintegrationtests">FilterCommandIntegrationTests</a></h5>
+<div class="paragraph">
+<p>This test class contains integration tests (interaction with the Model, UndoCommand, RedoCommand, AddCommand, DeleteCommand, SortCommand) for FilterCommand.
+Currently, no test cases are prepared but next release these test methods will be implemented:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>executing sorting after filtering once</p>
+</li>
+<li>
+<p>executing sorting after filtering twice</p>
+</li>
+<li>
+<p>executing undo and redo after filtering once</p>
+</li>
+<li>
+<p>executing undo and redo after filtering twice</p>
+</li>
+<li>
+<p>executing undo after filtering is cleared</p>
+</li>
+<li>
+<p>executing delete after filtering once</p>
+</li>
+<li>
+<p>executing delete after filtering twice</p>
+</li>
+<li>
+<p>executing add after filtering once</p>
+</li>
+<li>
+<p>executing add after filtering twice</p>
+</li>
+<li>
+<p>a complex case of different processes combined: The flow will be as follows for the next test:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>1- filter and</p>
+</li>
+<li>
+<p>2- filter or</p>
+</li>
+<li>
+<p>3- sort alphabetical</p>
+</li>
+<li>
+<p>4- delete 1</p>
+</li>
+<li>
+<p>5- undo</p>
+</li>
+<li>
+<p>6- undo</p>
+</li>
+<li>
+<p>7- redo</p>
+</li>
+<li>
+<p>8- filter clear</p>
+</li>
+<li>
+<p>9- undo</p>
+</li>
+<li>
+<p>10- add &#8230;&#8203;</p>
+</li>
+<li>
+<p>11- filter clear</p>
+</li>
+<li>
+<p>12-undo</p>
+</li>
+<li>
+<p>13- filter clear</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sort-commands"><a class="link" href="#sort-commands">3.3. Sort Commands</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>There are currently five main sorting methods present: <code>name</code>, <code>surname</code>, <code>gpa</code>, <code>education</code>, <code>skills</code>.
+There is also a complimentary <code>reverse</code> sort method for each main sorting method.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>name</strong> is called by the user through the following cli input: <code>sort name</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and sorts them by name alphabetically. The name sort begins with the first name and then proceeds to last name.</p>
+</li>
+<li>
+<p><strong>surname</strong> is called by the user through the following cli input: <code>sort surname</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and sorts them by surname alphabetically.</p>
+</li>
+<li>
+<p><strong>gpa</strong> is called by the user through the following cli input: <code>sort gpa</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and sorts them by gpa in increasing numeric order.</p>
+</li>
+<li>
+<p><strong>education</strong> is called by the user through the following cli input: <code>sort education</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and sorts them by education alphabetically.</p>
+</li>
+<li>
+<p><strong>skills</strong> is called by the user through the following cli input: <code>sort skills</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and first orders the skill tags for each person alphabetically. The method then proceeds to sort all persons based on their skill tags, in alphabetical order.</p>
+</li>
+<li>
+<p><strong>positions</strong> is called by the user through the following cli input: <code>sort positions</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and first orders the position tags for each person alphabetically. The method then proceeds to sort all persons based on their position tags, in alphabetical order.</p>
+</li>
+<li>
+<p><strong>endorsements</strong> is called by the user through the following cli input: <code>sort endorsements</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and first orders the endorsements for each person alphabetically. The method then proceeds to sort all persons based on their endorsements, in alphabetical order.</p>
+</li>
+<li>
+<p><strong>skill number</strong> is called by the user through the following cli input: <code>sort skill number</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and orders the persons based on their number of skills in descending order.</p>
+</li>
+<li>
+<p><strong>position number</strong> is called by the user through the following cli input: <code>sort position number</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and orders the persons based on their number of positions in descending order.</p>
+</li>
+<li>
+<p><strong>endorsement number</strong> is called by the user through the following cli input: <code>sort endorsement number</code>.<br>
+It takes the <em>current</em> list displayed in the left hand GUI panel and orders the persons based on their number of endorsements in descending order.</p>
+</li>
+<li>
+<p><strong>reverse</strong> can be applied before the sort keyword (e.g. <code>name</code>) through the following cli input: <code>sort reverse name</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>(the <strong>current</strong> list means that if filter is on, only those filtered persons shall be sorted and the filter shall remain on)</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-rational"><a class="link" href="#implementation-rational">3.3.2. Implementation Rational</a></h4>
+<div class="paragraph">
+<p>Despite the risk of slightly increasing the coupling, the aim was to use methods already written and rely on good cohesion.
+For example, once a sort command has correctly written the correctly ordered persons to a <code>List&lt;Person&gt;</code>, rather than duplicating large amounts of code by modifying the already listed persons in the GUI, it shall simply remove the persons in that addressbook version and then immediately re-add them in the correct order.</p>
+</div>
+<div class="paragraph">
+<p>It is of note that the temporary deletion of persons from the addressbook should be foolproof and there should be no way that the sort command ever permanently deletes the addressbook. Furthermore, ensuring the command works with the already implemented undo/redo command should ensure the user still has full control over all the persons in the contact book.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="approaches-considered"><a class="link" href="#approaches-considered">3.3.3. Approaches Considered</a></h4>
+<div class="paragraph">
+<p>When writing sort commands, there were two approaches considered: modify the indices of all persons and then refresh the left-hand GUI panel with this new list; or temporarily delete the list of persons and then add a new list of correctly ordered persons.</p>
+</div>
+<div class="paragraph">
+<p>Elements of lists in Java are ordered by when they were added. Sorting is possible using <em>Collections</em>, however this requires them to be strings. Since the Recruit Me application contains lists of various types, typically <em>Person</em>, there is no immediate compatibility with <em>Collections</em>. Furthermore it was suspected that to simply modify the indices of persons, a lot of duplicate code would be need to be written since this aspect of addressbook-level4 was not easily modifiable. Because of this the second method was opted for.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="adding-a-new-sort-command"><a class="link" href="#adding-a-new-sort-command">3.3.4. Adding a New Sort Command</a></h4>
+<div class="paragraph">
+<p>To add a new sort command, the following classes should be altered accordingly:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cliSyntax</code> - add the necessary new SortWord (and the reverse option)</p>
+</li>
+<li>
+<p><code>SortCommandParser</code> - add the new SortWord as an accepted input</p>
+</li>
+<li>
+<p><code>SortCommand</code> - add the call to the new <code>SortNewMethod</code> class when the new SortWord is inputted</p>
+</li>
+<li>
+<p><code>SortNewMethod</code> - a new class, following the example of <code>SortName</code>, that will return a list of Persons correctly ordered according to the new method</p>
+</li>
+<li>
+<p><code>SortUtil</code> - a place for lower-level processes required by the new sort method and called from <code>SortNewMethod</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is also sometimes of use to alter <code>Person</code> should the new method demand access of a certain element of <code>Person</code> that may be useful for other classes in the future.
+The developer should also add the necessary testing methods in <code>SortCommandTest</code>
+(TODO: INSERT CLASS DIAGRAM FOR v1.4)
+(TODO: INSERT SEQUENCE DIAGRAM FOR v1.4)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="endorse-command"><a class="link" href="#endorse-command">3.4. Endorse Command</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -797,7 +1283,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1920,10 +2406,10 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="product-scope"><a class="link" href="#product-scope">Appendix B: Product Scope</a></h2>
+<h2 id="product-scope-target-user-profile"><a class="link" href="#product-scope-target-user-profile">Appendix B: Product Scope - Target user profile</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Target user profile</strong>:</p>
+<p><strong>General Needs</strong>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1941,6 +2427,19 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 <li>
 <p>is reasonably comfortable using CLI apps</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Special Needs</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>this is an application for recruitment agency specifically</p>
+</li>
+<li>
+<p>the commands (filtering, sorting, deleting, adding etc.) and tags (education, experience etc.) are designed for applicants</p>
 </li>
 </ul>
 </div>
@@ -2002,10 +2501,46 @@ for <code>RemarkCommandParser</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">minimize chance of someone else seeing them by accident</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sort persons by name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">locate a person easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filter persons by any of the multiple properties at the same time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see which persons are fit into the criterion</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">use all the other operations when filtering is active</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate the searched persons more easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">disable the active filtering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see all the list when the job is done</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">undo the operation what he/she just did</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prevent false updates in the address book</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redo the operation what he/she just did</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prevent false undo operations in the address book</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see the education level, technical skills and experience of the persons</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">choose persons regarding more information given.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2021,9 +2556,6 @@ for <code>RemarkCommandParser</code>.</p>
 <p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
 <h3 id="use-case-delete-person" class="discrete">Use case: Delete person</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2069,8 +2601,152 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 </ul>
 </div>
+<h3 id="use-case-add-person" class="discrete">Use case: Add person</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add a new person with entering information about the new person</p>
+</li>
+<li>
+<p>AddressBook adds the person</p>
 <div class="paragraph">
-<p><em>{More to be added}</em></p>
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The given information format is invalid</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2b. All the necessary information is not given.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2b1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-filter-person-with-and" class="discrete">Use case: Filter person with and</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to filter address book with entering conditions to filter</p>
+</li>
+<li>
+<p>AddressBook filters the persons that passes with all the conditions and prints those.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The given information format is invalid</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-filter-person-with-or" class="discrete">Use case: Filter person with or</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to filter address book with entering conditions to filter</p>
+</li>
+<li>
+<p>AddressBook filters the persons that passes with at least one of the conditions and prints those.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The given information format is invalid</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-filter-clearing" class="discrete">Use case: Filter clearing</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to clear all the filtering in the address book.</p>
+</li>
+<li>
+<p>Filtering is cleared and all the people in the book is printed.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="use-case-sort-address-book-by-name" class="discrete">Use case: Sort address book by name</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to sort address book by name</p>
+</li>
+<li>
+<p>The address book is printed in a sorted order with respect to the names.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2080,7 +2756,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>8</code> (revision <code>1.8.0_201</code> or higher) installed.</p>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>9</code> (revision <code>1.9.4</code> or higher) installed.</p>
 </li>
 <li>
 <p>Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.</p>
@@ -2258,4 +2934,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-09 09:36:50 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-12 08:41:52 UTC</div></div></div></body></html>
