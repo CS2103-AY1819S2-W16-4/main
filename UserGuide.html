@@ -30,8 +30,9 @@
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.15. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.16. Clearing all entries : <code>clear</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.17. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">3.18. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.19. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#showing-and-updating-the-code-cv-code-for-a-person">3.18. Showing and Updating the <code>CV</code> for a Person:</a></li>
+<li><a href="#saving-the-data">3.19. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -77,32 +78,13 @@ Only Java 9 is supported.<br>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/UI.png" alt="UI" width="790">
+<img src="images/Ui.png" alt="Ui" width="800">
 </div>
 </div>
 </li>
 <li>
 <p>Type the command in the command box and press <kbd>Enter</kbd> to execute it.<br>
 e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
-</li>
-<li>
-<p>Some example commands you can try:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong><code>list</code></strong> : lists all contacts</p>
-</li>
-<li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
-</li>
-<li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
-</li>
-<li>
-<p><strong><code>exit</code></strong> : exits the app</p>
-</li>
-</ul>
-</div>
 </li>
 <li>
 <p>Refer to <a href="#Features">Section 3, &#8220;Features&#8221;</a> for details of each command.</p>
@@ -147,7 +129,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a candidate to Recruit Me<br>
-Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code></p>
+Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg/DEGREE-LEVEL [skill/SKILL]&#8230;&#8203; [position/POSITION]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -169,7 +151,13 @@ Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS [sk
 <p>GPA can take any float value between 0.0 and 4.0</p>
 </li>
 <li>
+<p>DEGREE-LEVEL only takes these inputs: <code>high school</code>, <code>associates</code> (2-year-degree), <code>bachelors</code>, <code>masters</code>, <code>PhD</code></p>
+</li>
+<li>
 <p>A candidate can have any number of skill/position tags (including 0)</p>
+</li>
+<li>
+<p>For the addition, input order is important.</p>
 </li>
 </ul>
 </div>
@@ -181,10 +169,10 @@ Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS [sk
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com d/NUS g/3.4 a/John street, block 123, #01-01</code></p>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com d/NUS g/3.4 deg/bachelors a/John street, block 123, #01-01</code></p>
 </li>
 <li>
-<p><code>add n/Betsy Crowe skill/statistics e/betsycrowe@example.com d/NTU g/2.4 a/Newgate Prison p/1234567 skill/Java position/UIDeveloper</code></p>
+<p><code>add n/Betsy Crowe skill/statistics e/betsycrowe@example.com d/NTU g/2.4 deg/high school a/Newgate Prison p/1234567 skill/Java position/UIDeveloper</code></p>
 </li>
 </ul>
 </div>
@@ -200,7 +188,7 @@ Format: <code>list</code></p>
 <h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing candidate in Recruit Me.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code></p>
+Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/EDUCATION] [g/GPA] [deg/DEGREE-LEVEL] [a/ADDRESS] [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -216,7 +204,7 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [skill/TAG]&#8
 <p>Existing values will be updated to the input values.</p>
 </li>
 <li>
-<p>When editing tags, the existing tags of the person will be removed(i.e adding of tags is not cumulative) except for
+<p>When editing tags, the existing tags of the person will be removed(i.e adding of tags is not cumulative, both skills and positions will be changed after editing one of them) except for
 existing endorsement tags.</p>
 </li>
 <li>
@@ -259,8 +247,8 @@ Format: <code>filter reverse</code></p>
 <div class="sect2">
 <h3 id="filtering-recruit-me-code-filter-code"><a class="link" href="#filtering-recruit-me-code-filter-code">3.7. Filtering Recruit Me: <code>filter</code></a></h3>
 <div class="paragraph">
-<p>It filters the current applicant pool regarding the existing entities of every single person (name, phone, email, address or skills).<br>
-Format: <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code></p>
+<p>*It filters the current applicant pool regarding the existing entities of every single person (name, phone, email, address, gpa, education (school), degree level, position, endorsement count or skills).<br>
+*Format: <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -269,15 +257,40 @@ Format: <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [em
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-for every field, using <code>&lt; or &gt;</code> can cause false results. Please do not use them in filtering criterion texts. All the fields are optional but at least one field should be used
+for every field, using <code>&lt; or &gt;</code> can cause false results. Please do not use them in filtering criterion texts. All the fields are optional but at least one field should be used.
 </td>
 </tr>
 </table>
 </div>
 <div class="sidebarblock">
 <div class="content">
+<div class="paragraph">
+<p><strong>Different types of filtering processes:</strong></p>
+</div>
 <div class="ulist">
 <ul>
+<li>
+<p>'OR' Usage: According to the conditions written, if at least one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+</li>
+<li>
+<p>'AND' Usage: According to the conditions written, if every single one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Special Input Conditions for Fields:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For all the non-mentioned fields below, the default input format should be applied for the filtering field. Default input formats can be checked from <code>add command tab in User Guide</code></p>
+</li>
+<li>
+<p>For <code>PHONE</code>, any number of integers more than 0 can be entered.</p>
+</li>
+<li>
+<p>For <code>EMAIL</code> and <code>ADDRESS</code>, any number of ASCII characters (also take the <code>TIP</code> into attention) more than 0 can be used.</p>
+</li>
 <li>
 <p>For <code>GPA</code>, it prints the persons who have higher or equal amount of GPA from the given input</p>
 </li>
@@ -285,16 +298,17 @@ for every field, using <code>&lt; or &gt;</code> can cause false results. Please
 <p>For <code>ENDORSEMENT</code>, a positive integer value is wanted, it prints the persons who have that much or higher amount of endorsements.</p>
 </li>
 <li>
-<p>'OR' Usage: According to the conditions written, if at least one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+<p>For <code>SKILLS</code> and <code>POSITIONS</code>, if more than one specification are added to the filter, they should be separated by ','</p>
 </li>
-<li>
-<p>'AND' Usage: According to the conditions written, if every single one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
-</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>About the Running Process of Filtering Command:</strong></p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>The filtering is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
-</li>
-<li>
-<p>If more than one skills are added to the filter, they should be separated by ','</p>
 </li>
 <li>
 <p>Filtering does not check if the written condition passes totally. It only checks, if the written condition is contained in the person properties.
@@ -304,7 +318,7 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 <p>All the people that are included in the filtering will be returned.</p>
 </li>
 <li>
-<p>All the operations, that change the content of the address book also clears every single filter.</p>
+<p><code>ADD</code> operation clears the existing filters automatically.</p>
 </li>
 <li>
 <p>After one filtering, the filtered address book can be filtered again.</p>
@@ -323,7 +337,7 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 <p>2- add : when filtering is active, adding a person also clears the filter along the addition. But addition takes place.</p>
 </li>
 <li>
-<p>3- sort / select / delete / edit / list / undo / redo / help / exit / history : can be used without clearing the filter</p>
+<p>3- sort / endorse / select / delete / edit / list / undo / redo / help / exit / history : can be used without clearing the filter</p>
 </li>
 </ul>
 </div>
@@ -348,11 +362,11 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 </div>
 </li>
 <li>
-<p>filter and name&lt;ale&gt;name addr&lt;abcd&gt;addr gpa&lt;3.1&gt;gpa skill&lt;C++, Java&gt;skill</p>
+<p>filter and name&lt;ale&gt;name addr&lt;street&gt;addr gpa&lt;3.1&gt;gpa pos&lt;Manager, Developer&gt;pos deg&lt;bachelors&gt;deg</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Returns the people, whose name contains ale and whose address contains abcd and who has (contains) C++ and Java both in the skills and has a GPA higher than or equal to 3.1</p>
+<p>Returns the people, whose name contains ale (in any uppercase and lowercase format) and whose address contains street and who is interested in Manager and Developer positions,has a GPA higher than or equal to 3.1 and has at least Bachelor&#8217;s degree</p>
 </li>
 </ul>
 </div>
@@ -422,6 +436,9 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="content">
 <div class="ulist">
 <ul>
+<li>
+<p>It filters the list of candidates temporally. If you use <code>filter</code> or <code>sort</code> commands after that, they uses the entire list to process. To have a permanent filtering until you use <code>add</code> command or clear the filter, use the <code>filter</code> command.</p>
+</li>
 <li>
 <p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
 </li>
@@ -618,7 +635,7 @@ Format: <code>select INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Selects the person and loads the Google search page the person at the specified <code>INDEX</code>.</p>
+<p>Selects the person and loads the CV the person at the specified <code>INDEX</code> if there is a CV for that person in the storage. If there is not, a placeholder page is loaded that says no CV is available.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the displayed person list.</p>
@@ -761,14 +778,106 @@ Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.18. Saving the data</a></h3>
+<h3 id="showing-and-updating-the-code-cv-code-for-a-person"><a class="link" href="#showing-and-updating-the-code-cv-code-for-a-person">3.18. Showing and Updating the <code>CV</code> for a Person:</a></h3>
+<div class="paragraph">
+<p><strong>Showing Stage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Just running the <code>select</code> command or clicking on the wanted person opens the CV.</p>
+</li>
+<li>
+<p>If there is no CV is available for the person, it shows a placeholder page.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Adding a new CV:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>After running the application first time and selecting someone in the application, the directories <code>./data/html</code> and <code>./data/html/cv</code> should be created.</p>
+</li>
+<li>
+<p>To add a new CV to the application, please create an <code>HTML</code> file in <code>./data/html</code> directory.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The name of the directory should be the name of the person in lowercase with no-space-separated format (e.g. if the candidate name is Alex Yeoh, the file name should be <code>alexyeoh.html</code>).</p>
+</li>
+<li>
+<p>The content of the HTML is below. to the field in HTML content <code>[YOUR_JPG_FILE_CV]</code> place the name that you gave to HTML file. But do not add any extension.</p>
+</li>
+<li>
+<p>Prepare the CV you want to add in <code>JPG</code> format and name with the text that you wrote to <code>[YOUR_JPG_FILE_CV]</code> and place this file to directory <code>./data/html/cv</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="DarkTheme.css"&gt;
+&lt;/head&gt;
+&lt;body style="background-color:#383838"&gt;
+	&lt;img style="display:block; margin-left:auto; margin-right:auto; width:40%"
+	src="./cv/[YOUR_JPG_FILE_CV].jpg"&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Updating a CV:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Edit Command:</code> If you change name of a candidate in the application, the name of the HTML file is not automatically updated. Please update the name.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you change name of a person that came to the application by default and has a CV, you cannot reach to that person&#8217;s CV until you reverse your edit.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Delete Command:</code> If you delete one person from the application, the HTML and JPG files are not automatically deleted. Please delete them manually if you want those files to be deleted.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>What comes in v2.0?</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automatic file handling for editing and deleting commands.</p>
+</li>
+<li>
+<p>For addition, path of a JPG image will be taken and the html file will be constructed and JPG file will be copied to the right directory directly by the application.</p>
+</li>
+<li>
+<p>Currently, adding multiple CVs at one is not available, thet will be possible with v2.0.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.19. Saving the data</a></h3>
 <div class="paragraph">
 <p>Applicant data is saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.19. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
@@ -790,8 +899,8 @@ There is no need to save manually.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [skill/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 skill/Java skill/leadership</code></p>
+<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL d/EDUCATION g/GPA deg/DEGREE-LEVEL a/ADDRESS [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com d/NTU g/3.1 deg/Bachelors a/123, Clementi Rd, 1234665 skill/Java position/Manager</code></p>
 </li>
 <li>
 <p><strong>Clear</strong> : <code>clear</code></p>
@@ -801,12 +910,33 @@ e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1
 e.g. <code>delete 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [skill/TAG]&#8230;&#8203;</code><br>
+<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [d/EDUCATION] [g/GPA] [deg/DEGREE-LEVEL][a/ADDRESS] [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code><br>
 e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
 e.g. <code>find James Jake</code></p>
+</li>
+<li>
+<p><strong>Filter</strong> :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Usage 1: <code>filter and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code><br>
+e.g. <code>filter and name&lt;ale&gt;name gpa&lt;2.6&gt;gpa skill&lt;C++&gt;skill end&lt;2&gt;end email&lt;a@&gt;email</code></p>
+</li>
+<li>
+<p>Usage 2: <code>filter or [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code><br>
+e.g. <code>filter or phone&lt;9&gt;phone edu&lt;NUS&gt;edu pos&lt;Manager, Developer&gt;pos deg&lt;high school&gt;deg addr&lt;street&gt;addr</code></p>
+</li>
+<li>
+<p>Usage 3: <code>filter clear</code></p>
+</li>
+<li>
+<p>Usage 4: <code>filter reverse</code></p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p><strong>Sort</strong> : <code>sort [reverse] KEYWORD</code><br>
@@ -835,4 +965,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 08:12:45 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 09:25:53 UTC</div></div></div></body></html>
