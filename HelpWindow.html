@@ -17,9 +17,9 @@
 <li><a href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></li>
 <li><a href="#listing-all-persons-code-list-code">3.3. Listing all persons : <code>list</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></li>
-<li><a href="#clearing-the-filter-in-recruit-me-code-filter-clear-code">3.5. Clearing the filter in Recruit Me: <code>filter clear</code></a></li>
-<li><a href="#reversing-the-filter-in-recruit-me-code-filter-reverse-code">3.6. Reversing the filter in Recruit Me: <code>filter reverse</code></a></li>
-<li><a href="#filtering-recruit-me-code-filter-code">3.7. Filtering Recruit Me: <code>filter</code></a></li>
+<li><a href="#filtering-recruit-me-code-filter-code">3.5. Filtering Recruit Me: <code>filter</code></a></li>
+<li><a href="#clearing-the-filter-in-recruit-me-code-filter-clear-code">3.6. Clearing the filter in Recruit Me: <code>filter clear</code></a></li>
+<li><a href="#reversing-the-filter-in-recruit-me-code-filter-reverse-code">3.7. Reversing the filter in Recruit Me: <code>filter reverse</code></a></li>
 <li><a href="#approve-persons-by-employee-name-code-endorse-code">3.8. Approve persons by employee name: <code>endorse</code></a></li>
 <li><a href="#locating-persons-by-name-code-find-code">3.9. Locating persons by name: <code>find</code></a></li>
 <li><a href="#sorting-persons-code-sort-code">3.10. Sorting persons: <code>sort</code></a></li>
@@ -32,7 +32,7 @@
 <li><a href="#exiting-the-program-code-exit-code">3.17. Exiting the program : <code>exit</code></a></li>
 <li><a href="#showing-and-updating-the-code-cv-code-for-a-person">3.18. Showing and Updating the <code>CV</code> for a Person:</a></li>
 <li><a href="#saving-the-data">3.19. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#adding-multiple-persons-code-coming-in-v2-0-code">3.20. Adding Multiple Persons <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -145,7 +145,7 @@ Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg
 <p>Email should be in the format of <code>[ANY NUMBER OF ASCII CHARACTERS MORE THAN 0]@[EXTENSION1].[EXTENSION2]</code></p>
 </li>
 <li>
-<p>Education can take character from English alphabet and also it can have <code>space</code></p>
+<p>Education can take the characters from English alphabet and also it can have <code>space</code></p>
 </li>
 <li>
 <p>GPA can take any float value between 0.0 and 4.0</p>
@@ -155,9 +155,6 @@ Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg
 </li>
 <li>
 <p>A candidate can have any number of skill/position tags (including 0)</p>
-</li>
-<li>
-<p>For the addition, input order is important.</p>
 </li>
 </ul>
 </div>
@@ -204,11 +201,11 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/EDUCATION] [g/GPA] [deg
 <p>Existing values will be updated to the input values.</p>
 </li>
 <li>
-<p>When editing tags, the existing tags of the person will be removed(i.e adding of tags is not cumulative, both skills and positions will be changed after editing one of them) except for
+<p>When editing tags, the existing tags of the person will be removed (i.e adding of tags is not cumulative, both skills and positions will be changed after editing one of them) except for
 existing endorsement tags.</p>
 </li>
 <li>
-<p>You can remove all the person&#8217;s tags by typing <code>skill/</code> or 'position/' without specifying any tags after it.</p>
+<p>You can remove all the person&#8217;s tags by typing <code>skill/</code> or <code>position/</code> without specifying any tags after it.</p>
 </li>
 </ul>
 </div>
@@ -225,30 +222,22 @@ Edits the phone number and email address of the 1st person to be <code>91234567<
 </li>
 <li>
 <p><code>edit 2 n/Betsy Crower skill/</code><br>
-Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags.</p>
+Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags except endorsement tags.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-the-filter-in-recruit-me-code-filter-clear-code"><a class="link" href="#clearing-the-filter-in-recruit-me-code-filter-clear-code">3.5. Clearing the filter in Recruit Me: <code>filter clear</code></a></h3>
-<div class="paragraph">
-<p>It clears all the filters in the applicant pool.<br>
-Format: <code>filter clear</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="reversing-the-filter-in-recruit-me-code-filter-reverse-code"><a class="link" href="#reversing-the-filter-in-recruit-me-code-filter-reverse-code">3.6. Reversing the filter in Recruit Me: <code>filter reverse</code></a></h3>
-<div class="paragraph">
-<p>It reverses all the filtering conditions and show the eliminated ones.<br>
-Format: <code>filter reverse</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="filtering-recruit-me-code-filter-code"><a class="link" href="#filtering-recruit-me-code-filter-code">3.7. Filtering Recruit Me: <code>filter</code></a></h3>
-<div class="paragraph">
-<p>*It filters the current applicant pool regarding the existing entities of every single person (name, phone, email, address, gpa, education (school), degree level, position, endorsement count or skills).<br>
-*Format: <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code></p>
+<h3 id="filtering-recruit-me-code-filter-code"><a class="link" href="#filtering-recruit-me-code-filter-code">3.5. Filtering Recruit Me: <code>filter</code></a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>It filters the current applicant pool regarding the existing entities of every single person (name, phone, email, address, gpa, education (school), degree level, position, endorsement count or skills).<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT&gt;end]</code></p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -257,7 +246,7 @@ Format: <code>filter reverse</code></p>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-for every field, using <code>&lt; or &gt;</code> can cause false results. Please do not use them in filtering criterion texts. All the fields are optional but at least one field should be used.
+For every field, using <code>&lt; or &gt;</code> can cause false results. Please do not use them in filtering criterion texts. All the fields are optional but at least one field should be used.
 </td>
 </tr>
 </table>
@@ -265,15 +254,31 @@ for every field, using <code>&lt; or &gt;</code> can cause false results. Please
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p><strong>Different types of filtering processes:</strong></p>
+<p><strong>Definition of Some Keywords for the Filter Guide:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>'OR' Usage: According to the conditions written, if at least one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+<p><strong>Prefix:</strong> basically the beginning part of every field in the command e.g. <code>name&lt;</code> for NAME field, <code>deg&lt;</code> for DEGREE-LEVEL.</p>
 </li>
 <li>
-<p>'AND' Usage: According to the conditions written, if every single one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+<p><strong>Reverse Prefix:</strong> the ending part of every field in the command e.g. <code>&gt;name</code> for NAME field, <code>&gt;deg</code> for DEGREE-LEVEL.</p>
+</li>
+<li>
+<p><strong>Condition:</strong> The text between every <code>Prefix</code> and <code>Reverse Prefix</code> couple.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Different Types of Filtering Processes:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>OR</code> Usage: According to the conditions written, if at least one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
+</li>
+<li>
+<p><code>AND</code> Usage: According to the conditions written, if every single one of them passes with the regarding person in the applicant pool, the person is included in the filtered version.</p>
 </li>
 </ul>
 </div>
@@ -283,13 +288,13 @@ for every field, using <code>&lt; or &gt;</code> can cause false results. Please
 <div class="ulist">
 <ul>
 <li>
-<p>For all the non-mentioned fields below, the default input format should be applied for the filtering field. Default input formats can be checked from <code>add command tab in User Guide</code></p>
+<p>For all the non-mentioned fields below, the default input format should be applied for the filtering field. Default input formats can be checked from <code>Adding a person: add - User Guide</code></p>
 </li>
 <li>
 <p>For <code>PHONE</code>, any number of integers more than 0 can be entered.</p>
 </li>
 <li>
-<p>For <code>EMAIL</code> and <code>ADDRESS</code>, any number of ASCII characters (also take the <code>TIP</code> into attention) more than 0 can be used.</p>
+<p>For <code>EMAIL</code> and <code>ADDRESS</code>, any number of ASCII characters (also take the <code>TIP</code> into attention for correct results) more than 0 can be used.</p>
 </li>
 <li>
 <p>For <code>GPA</code>, it prints the persons who have higher or equal amount of GPA from the given input</p>
@@ -300,6 +305,29 @@ for every field, using <code>&lt; or &gt;</code> can cause false results. Please
 <li>
 <p>For <code>SKILLS</code> and <code>POSITIONS</code>, if more than one specification are added to the filter, they should be separated by ','</p>
 </li>
+<li>
+<p>For <code>DEGREE-LEVEL</code>, there are 2 input type options: text and number. For the text format, the search is <strong>case-insensitive</strong>. So, any uppercase or lowercase type of the text is accepted.
+If filtering is applied for this criteria, the persons with the same or higher education levels are shown. There 5 different levels for the input:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Number:</strong> <code>0</code> and <strong>Text:</strong> <code>highschool</code></p>
+</li>
+<li>
+<p><strong>Number:</strong> <code>1</code> and <strong>Text:</strong> <code>associates</code> (2-year-university)</p>
+</li>
+<li>
+<p><strong>Number:</strong> <code>2</code> and <strong>Text:</strong> <code>bachelors</code></p>
+</li>
+<li>
+<p><strong>Number:</strong> <code>3</code> and <strong>Text:</strong> <code>masters</code></p>
+</li>
+<li>
+<p><strong>Number:</strong> <code>4</code> and <strong>Text:</strong> <code>phd</code></p>
+</li>
+</ul>
+</div>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -308,7 +336,7 @@ for every field, using <code>&lt; or &gt;</code> can cause false results. Please
 <div class="ulist">
 <ul>
 <li>
-<p>The filtering is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>The filtering is case insensitive. e.g <code>hans</code> will match <code>Hans</code>.</p>
 </li>
 <li>
 <p>Filtering does not check if the written condition passes totally. It only checks, if the written condition is contained in the person properties.
@@ -324,20 +352,20 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 <p>After one filtering, the filtered address book can be filtered again.</p>
 </li>
 <li>
-<p>For every single criteria between the filtering prefixes, input check for the validity is made</p>
+<p>For every single criteria between the filtering prefixes, input check for the validity is made.</p>
 </li>
 <li>
 <p>Filtering is compatible with all the other commands:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>1- clear : since the persons list changes, the filtering is automatically cleared</p>
+<p>1- <code>clear</code> : since the persons list changes, the filtering is automatically cleared</p>
 </li>
 <li>
-<p>2- add : when filtering is active, adding a person also clears the filter along the addition. But addition takes place.</p>
+<p>2- <code>add</code> : when filtering is active, adding a person also clears the filter along the addition. But addition takes place.</p>
 </li>
 <li>
-<p>3- sort / endorse / select / delete / edit / list / undo / redo / help / exit / history : can be used without clearing the filter</p>
+<p>3- <code>sort / endorse / select / delete / edit / list / undo / redo / help / exit / history</code> : can be used without clearing the filter</p>
 </li>
 </ul>
 </div>
@@ -352,21 +380,21 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 <div class="ulist">
 <ul>
 <li>
-<p>filter or phone&lt;91234567&gt;phone email&lt;<a href="mailto:johndoemail@example.com">johndoemail@example.com</a>&gt;email skill&lt;C++, Java&gt;skill end&lt;2&gt;end</p>
+<p><code>filter or phone&lt;91234567&gt;phone email&lt;mail@ex&gt;email skill&lt;C++, Java&gt;skill end&lt;2&gt;end deg&lt;4&gt;deg</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Returns the people, whose numbers include 91234567 or whose email includes <a href="mailto:johndoe@example.com">johndoe@example.com</a> or who has (contains) at least C++ or Java in the skills or has at least 2 endorsements.</p>
+<p><em>Returns the people, whose numbers include <code>91234567</code> or whose email includes <code>mail@ex</code> or who has (contains) at least <code>C++ or Java</code> in the skills or has at least <code>2 endorsements</code> or has at least <code>Master&#8217;s degree</code>.</em></p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>filter and name&lt;ale&gt;name addr&lt;street&gt;addr gpa&lt;3.1&gt;gpa pos&lt;Manager, Developer&gt;pos deg&lt;bachelors&gt;deg</p>
+<p><code>filter and name&lt;ale&gt;name addr&lt;street&gt;addr gpa&lt;3.1&gt;gpa pos&lt;Manager, Developer&gt;pos deg&lt;bachelors&gt;deg</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Returns the people, whose name contains ale (in any uppercase and lowercase format) and whose address contains street and who is interested in Manager and Developer positions,has a GPA higher than or equal to 3.1 and has at least Bachelor&#8217;s degree</p>
+<p><em>Returns the people, whose name contains <code>ale</code> (in any uppercase and lowercase format) and whose address contains <code>street</code> and who is interested in <code>Manager and Developer</code> positions,has a GPA higher than or equal to <code>3.1</code> and has at least <code>Bachelor&#8217;s degree</code>.</em></p>
 </li>
 </ul>
 </div>
@@ -375,10 +403,24 @@ e.g if there is someone named Alex, in the filtering conditions <code>n/ale/n</c
 </div>
 </div>
 <div class="sect2">
+<h3 id="clearing-the-filter-in-recruit-me-code-filter-clear-code"><a class="link" href="#clearing-the-filter-in-recruit-me-code-filter-clear-code">3.6. Clearing the filter in Recruit Me: <code>filter clear</code></a></h3>
+<div class="paragraph">
+<p>It clears all the filters in the applicant pool.<br>
+Format: <code>filter clear</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reversing-the-filter-in-recruit-me-code-filter-reverse-code"><a class="link" href="#reversing-the-filter-in-recruit-me-code-filter-reverse-code">3.7. Reversing the filter in Recruit Me: <code>filter reverse</code></a></h3>
+<div class="paragraph">
+<p>It reverses all the filtering conditions and shows the eliminated ones.<br>
+Format: <code>filter reverse</code></p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="approve-persons-by-employee-name-code-endorse-code"><a class="link" href="#approve-persons-by-employee-name-code-endorse-code">3.8. Approve persons by employee name: <code>endorse</code></a></h3>
 <div class="paragraph">
 <p>Endorses an existing candidate in RecruitMe.<br>
-Format: 'endorse [clear] INDEX n/YOUR NAME'</p>
+Format: <code>endorse [clear] INDEX n/YOUR NAME</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -401,7 +443,7 @@ Format: 'endorse [clear] INDEX n/YOUR NAME'</p>
 existing endorsement tags.</p>
 </li>
 <li>
-<p>Removes endorsement of a person at the specified index using 'clear' keyword</p>
+<p>Removes endorsement of a person at the specified index using <code>clear</code> keyword</p>
 </li>
 <li>
 <p>Error will be thrown if an employee tries to unendorse a candidate he or she has not previously endorsed</p>
@@ -416,12 +458,12 @@ existing endorsement tags.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>'endorse 1 n/Steve Jobs'
-Adds a blue tag to the candidate at the '1' index with the text 'Steve Jobs'</p>
+<p><code>endorse 1 n/Steve Jobs</code>
+Adds a blue tag to the candidate at the <code>1</code> index with the text <code>Steve Jobs</code></p>
 </li>
 <li>
-<p>'endorse clear 1 n/Steve Jobs'
-Removes 'Steve Jobs' blue tag from the candidate at the '1' index</p>
+<p><code>endorse clear 1 n/Steve Jobs</code>
+Removes 'Steve Jobs' blue tag from the candidate at the <code>1</code> index</p>
 </li>
 </ul>
 </div>
@@ -877,9 +919,57 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></h3>
-<div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
+<h3 id="adding-multiple-persons-code-coming-in-v2-0-code"><a class="link" href="#adding-multiple-persons-code-coming-in-v2-0-code">3.20. Adding Multiple Persons <code>[coming in v2.0]</code></a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Right now, through the application there is no possibility to add multiple persons at once. This feature will come with v2.0.</p>
+</li>
+<li>
+<p>However, there is a way to add multiple persons at once:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you run the application at least once and change some data in it, you will see the directory <code>./data/addressbook.json</code>.</p>
+</li>
+<li>
+<p>It is the <code>JSON</code> file that holds every single person on the application. The format is given below.</p>
+</li>
+<li>
+<p>As long as the format is correct, you can add as many people as you want or if you have a ready file with the same format, you can replace it directly as long as you rename the file as <code>addressbook.json</code>.</p>
+</li>
+<li>
+<p>The changes made in the file will be shown in the application GUI itself, too.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "persons" : [ {
+    "name" : "Claire Smith",
+    "phone" : "98765432",
+    "education" : "Oxford",
+    "gpa" : "2.7",
+    "degree" : "PHD",
+    "email" : "claireS@gmail.com",
+    "address" : "12 Biscuits Way, Oxford",
+    "tagged" : [ "s:PHP", "s:C#", "s:C++", "e:Elon Musk", "s:Linux", "p:Systems Analyst", "s:Finance" ]
+  }, {
+    "name" : "Bruce Wayne",
+    "phone" : "92875639",
+    "education" : "Stanford",
+    "gpa" : "3.6",
+    "degree" : "Bachelors",
+    "email" : "bruce@wayne.com",
+    "address" : "1 Wayne Manor, New York NY",
+    "tagged" : [ "e:Thomas Wayne", "p:Project Consultant", "s:Cyber Crime", "s:Hardware Testing", "p:Crime Analyst", "s:Finance", "s:Business Analysis" ]
+  }  ]
+}</pre>
+</div>
 </div>
 </div>
 </div>
@@ -965,4 +1055,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 10:14:44 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 11:08:05 UTC</div></div></div></body></html>
