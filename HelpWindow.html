@@ -513,7 +513,7 @@ Format: <code>sort [reverse] KEYWORD</code></p>
 </div>
 <div class="paragraph">
 <p>Accepted KEYWORDs:
-        <code>name</code>; <code>surname</code>; <code>education</code>; <code>gpa</code>; <code>skills</code>; <code>positions</code>; <code>endorsements</code>; <code>skill number</code>; <br>
+        <code>name</code>; <code>surname</code>; <code>education</code>; <code>gpa</code>; <code>degree</code>; <code>skills</code>; <code>positions</code>; <code>endorsements</code>; <code>skill number</code>; <br>
         <code>position number</code>;  <code>endorsement number</code></p>
 </div>
 <div class="paragraph">
@@ -533,10 +533,10 @@ skill is that which appears first when the person&#8217;s skills have been order
 </ul>
 </div>
 <div class="paragraph">
-<p>Methodology:
-.Individual Sort Command Methods</p>
+<p>Methodology:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Individual Sort Command Methods</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -545,7 +545,7 @@ skill is that which appears first when the person&#8217;s skills have been order
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">CLI Command</th>
 <th class="tableblock halign-left valign-top">Sort Comparison</th>
 <th class="tableblock halign-left valign-top">Sort Effect</th>
 <th class="tableblock halign-left valign-top">Example</th>
@@ -554,15 +554,135 @@ skill is that which appears first when the person&#8217;s skills have been order
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Compares the Christian name first and then the surname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Christian name first, then the surname</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>`Adam Smith` shall come before <code>Shaun Adams</code> and <code>Adam Blacksmith</code> shall come before <code>Adam Smith</code>.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Adam Smith</code> shall come before <code>Shaun Adams</code> and <code>Adam Blacksmith</code> shall come before <code>Adam Smith</code>.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort surname</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Compares the surname only</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Surname</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>`Ben Adams` shall come before <code>Adam Black</code>.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Ben Adams</code> shall come before <code>Adam Black</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort education</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Education name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical, case-insensitive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Charlotte Green (NTU)</code> shall come before <code>Adam Smith (NUS)</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort gpa</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decreasing numeric value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Adam Smith (3.1)</code> shall come before <code>Charlotte Green (3.9)</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort degree</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Degree name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Highest to lowest: PhD, Masters, Bachelors, Associates, High School</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Charlotte Green (Masters)</code> shall come before <code>Adam Smith (Bachelors)</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort skills</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arranges each person&#8217;s skills alphabetically and then arranges the people based on their skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical, case-insensitive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Peter Parker (Python, Debugging)</code> shall come before <code>Charlotte Oliveiro (Java)</code> since <code>Debugging</code> comes before <code>Java</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort positions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arranges each person&#8217;s positions alphabetically and then arranges the people based on their positions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical, case-insensitive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Charlotte Oliveiro (Project Consultant, Crime Analyst)</code> shall come before <code>Peter Parker (Databases)</code> since <code>Crime Analyst</code> comes before <code>Databases</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort endorsements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arranges each person&#8217;s endorsements alphabetically and then arranges the people based on their endorsements</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical, case-insensitive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Irfan Ibrahim (Warren Buffett, Jeff Bezos)</code> shall come before <code>Alex Yeoh (Mark Cuban, Steve Jobs)</code> since <code>Jeff Bezos</code> comes before <code>Mark Cuban</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort skill number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decreasing numeric value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Peter Parker (Python, Debugging)</code> shall come before <code>Charlotte Oliveiro (Java)</code> since <code>Peter Parker</code> has two skills whereas <code>Charlotte Oliveiro</code> only has one.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort position number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of positions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decreasing numeric value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Charlotte Oliveiro (Project Consultant, Crime Analyst)</code> shall come before <code>Peter Parker (Databases)</code> since <code>Charlotte Oliveiro</code> has had two positions whereas <code>Peter Parker</code> only has one.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort endorsement number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of endorsements</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decreasing numeric value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>Irfan Ibrahim (Warren Buffett, Jeff Bezos)</code> shall come before <code>Bruce Wayne (Thomas Wayne)</code> since <code>Irfan Ibrahim</code> has two endorsements whereas <code>Bruce Wayne</code> only has one.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort reverse KEYWORD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reverses the ordering caused by the KEYWORD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em> <code>sort reverse gpa</code> will cause <code>Adam Smith (3.1)</code> to come after <code>Charlotte Green (3.9)</code>.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Intelligent Sorting:</p>
+</div>
+<div class="paragraph">
+<p>It is possible for persons to share the same information <em>(e.g. both have the same GPA)</em>.
+For this situation a subsequent sorting method to sort these persons is chosen based on what the user, wanting a certain initial sort method, is likely to be interested in.</p>
+</div>
+<div class="paragraph">
+<p>Since persons in the address book cannot have the same full name, this shall always differentiate persons and so is used as the final sorting method.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Flow pattern for the sorting methods</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Sort Method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subsequent Sort Method <em>(for persons with same value after first sort method)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secondary Subsequent Sort Method <em>(for persons with same value after first and subsequent sort method)</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Surname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skills, Positions, Endorsements</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skills, Positions, Endorsements Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skills, Positions, Endorsements respectively</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gpa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Degree</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Education</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 </tbody>
 </table>
@@ -571,57 +691,6 @@ skill is that which appears first when the person&#8217;s skills have been order
 <div class="ulist">
 <ul>
 <li>
-<p>The <code>sort surname</code> command compares the surname only.<br>
-If two surnames match, then the previous relative ordering of the two shall be kept.<br>
-<em>e.g. <code>Ben Adams</code> shall come before <code>Adam Black</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort education</code> command sorts the persons by the alphabetical ordering of their education (case-insensitive).<br>
-<em>e.g. <code>Charlotte Green (NTU)</code> shall come before <code>Adam Smith (NUS)</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort gpa</code> command sorts the persons by increasing gpa numeric value.<br>
-<em>e.g. <code>Adam Smith (3.1)</code> shall come before <code>Charlotte Green (3.9)</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort skills</code> arranges each person&#8217;s skills alphabetically and then arranges the people based on their skills in alphabetical order (case-insensitive).<br>
-<em>e.g. <code>Peter Parker (Python, Debugging)</code> shall come before <code>Charlotte Oliveiro (Java)</code><br>
-since <code>Debugging</code> comes before <code>Java</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort positions</code> arranges each person&#8217;s positions alphabetically and then arranges the people based on their positions in alphabetical order.<br>
-<em>e.g. <code>Charlotte Oliveiro (Project Consultant, Crime Analyst)</code> shall come before <code>Peter Parker (Databases)</code><br>
-since <code>Crime Analyst</code> comes before <code>Databases</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort endorsements</code> arranges each person&#8217;s endorsements alphabetically and then arranges the people based on their endorsements in alphabetical order (case-insensitive).<br>
-<em>e.g. <code>Irfan Ibrahim (Warren Buffett, Jeff Bezos)</code> shall come before <code>Alex Yeoh (Mark Cuban, Steve Jobs)</code><br>
-since <code>Jeff Bezos</code> comes before <code>Mark Cuban</code>.</em></p>
-</li>
-<li>
-<p>The <code>sort skill number</code> arranges persons based on the number of skills they have from most to fewest.+
-<em>e.g. <code>Peter Parker (Python, Debugging)</code> shall come before <code>Charlotte Oliveiro (Java)</code><br>
-since <code>Peter Parker</code> has two skills where as <code>Charlotte Oliveiro</code> only has one.</em></p>
-</li>
-<li>
-<p>The <code>sort position number</code> arranges persons based on the number of positions they have from most to fewest.+
-<em>e.g. <code>Charlotte Oliveiro (Project Consultant, Crime Analyst)</code> shall come before <code>Peter Parker (Databases)</code><br>
-since <code>Charlotte Oliveiro</code> has had two positions where as <code>Peter Parker</code> only has one.</em></p>
-</li>
-<li>
-<p>The <code>sort endorsement number</code> arranges persons based on the number of endorsements they have from most to fewest.<br>
-<em>e.g. <code>Irfan Ibrahim (Warren Buffett, Jeff Bezos)</code> shall come before <code>Bruce Wayne (Thomas Wayne)</code><br>
-since <code>Irfan Ibrahim</code> has two endorsements where as <code>Bruce Wayne</code> only has one.</em></p>
-</li>
-<li>
-<p>The <code>reverse</code> keyword can be used in conjunction with any of the above keywords and it shall reverse the ordering.<br>
-<em>e.g. The <code>sort reverse surname</code> command shall result in <code>Adam Black</code> coming before <code>Ben Adams</code>.</em></p>
-</li>
-<li>
-<p>If the sorting method has two persons with the same value <em>(e.g. both persons have two endorsements in the 'sort<br>
-endorsement number' command)</em>, then the previous relative ordering of the two shall be kept.</p>
-</li>
-<li>
 <p>The <code>sort</code> command is compatible with the <code>filter</code> command.<br>
 If the Address Book contains ten persons, but the filter has selected just three persons, then only the three persons shall be ordered and returned with the new index numbers.<br>
 Additional filters can be applied within the sort.</p>
@@ -629,7 +698,7 @@ Additional filters can be applied within the sort.</p>
 <li>
 <p>The <code>sort</code> command is partially compatible with the <code>find</code> command.<br>
 If the Address Book is currently sorted according to a certain method, the <code>find</code> command shall return the persons, according to the specified find keyword, ordered by the previous sort method.<br>
-If the Address Book has currently <em>found</em> certain persons from the <code>find</code> command, an additional sort shall sort all those in the address book and not just those that have been <em>found</em>.
+If the Address Book has currently <em>found</em> certain persons from the <code>find</code> command, a subsequent sort shall sort all those in the address book and not just those that have been <em>found</em>.
 Should the user wish to just sort a few people, the <code>filter</code> command should be used as outlined above.</p>
 </li>
 <li>
@@ -1046,6 +1115,7 @@ e.g. <code>filter or phone&lt;9&gt;phone edu&lt;NUS&gt;edu pos&lt;Manager, Devel
 </li>
 <li>
 <p><strong>Sort</strong> : <code>sort [reverse] KEYWORD</code><br>
+Valid KEYWORDs: <code>name</code>; <code>surname</code>; <code>education</code>; <code>gpa</code>; <code>degree</code>; <code>skills</code>; <code>positions</code>; <code>endorsements</code>; <code>skill number</code>; <code>position number</code>;  <code>endorsement number</code><br>
 e.g. <code>sort name</code><br>
 e.g. <code>sort reverse education</code></p>
 </li>
@@ -1076,4 +1146,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:49:17 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:25:38 UTC</div></div></div></body></html>
