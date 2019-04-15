@@ -30,12 +30,54 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#filter-or-and-clear-reverse-feature">3.2. Filter or/and/clear/reverse feature</a></li>
-<li><a href="#sort-commands">3.3. Sort Commands</a></li>
-<li><a href="#endorse-command">3.4. Endorse Command</a></li>
-<li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
+<li><a href="#colored-tag-feature">3.2. Colored Tag Feature</a></li>
+<li><a href="#education-and-gpa">3.3. Education and GPA</a></li>
+</ul>
+</li>
+<li><a href="#documentation">4. Documentation</a>
+<ul class="sectlevel2">
+<li><a href="#editing-documentation">4.1. Editing Documentation</a></li>
+<li><a href="#publishing-documentation">4.2. Publishing Documentation</a></li>
+<li><a href="#converting-documentation-to-pdf-format">4.3. Converting Documentation to PDF format</a></li>
+<li><a href="#Docs-SiteWideDocSettings">4.4. Site-wide Documentation Settings</a></li>
+<li><a href="#Docs-PerFileDocSettings">4.5. Per-file Documentation Settings</a></li>
+<li><a href="#site-template">4.6. Site Template</a></li>
+</ul>
+</li>
+<li><a href="#Testing">5. Testing</a>
+<ul class="sectlevel2">
+<li><a href="#running-tests">5.1. Running Tests</a></li>
+<li><a href="#types-of-tests">5.2. Types of tests</a></li>
+<li><a href="#troubleshooting-testing">5.3. Troubleshooting Testing</a></li>
+</ul>
+</li>
+<li><a href="#dev-ops">6. Dev Ops</a>
+<ul class="sectlevel2">
+<li><a href="#build-automation">6.1. Build Automation</a></li>
+<li><a href="#continuous-integration">6.2. Continuous Integration</a></li>
+<li><a href="#coverage-reporting">6.3. Coverage Reporting</a></li>
+<li><a href="#documentation-previews">6.4. Documentation Previews</a></li>
+<li><a href="#making-a-release">6.5. Making a Release</a></li>
+<li><a href="#managing-dependencies">6.6. Managing Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#GetStartedProgramming">Appendix A: Suggested Programming Tasks to Get Started</a>
+<ul class="sectlevel2">
+<li><a href="#GetStartedProgramming-EachComponent">A.1. Improving each component</a></li>
+<li><a href="#GetStartedProgramming-RemarkCommand">A.2. Creating a new command: <code>remark</code></a></li>
+</ul>
+</li>
+<li><a href="#product-scope-target-user-profile">Appendix B: Product Scope - Target user profile</a></li>
+<li><a href="#user-stories">Appendix C: User Stories</a></li>
+<li><a href="#use-cases">Appendix D: Use Cases</a></li>
+<li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
+<li><a href="#glossary">Appendix F: Glossary</a></li>
+<li><a href="#product-survey">Appendix G: Product Survey</a></li>
+<li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
+<ul class="sectlevel2">
+<li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
+<li><a href="#deleting-a-person">H.2. Deleting a person</a></li>
+<li><a href="#saving-data">H.3. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -240,7 +282,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 <p>Get some sense of the overall design by reading <a href="#Design-Architecture">Section 2.1, &#8220;Architecture&#8221;</a>.</p>
 </li>
 <li>
-<p>Take a look at <a href="#GetStartedProgramming">[GetStartedProgramming]</a>.</p>
+<p>Take a look at <a href="#GetStartedProgramming">Appendix A, <em>Suggested Programming Tasks to Get Started</em></a>.</p>
 </li>
 </ol>
 </div>
@@ -712,7 +754,87 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="filter-or-and-clear-reverse-feature"><a class="link" href="#filter-or-and-clear-reverse-feature">3.2. Filter or/and/clear/reverse feature</a></h3>
+<h3 id="colored-tag-feature"><a class="link" href="#colored-tag-feature">3.2. Colored Tag Feature</a></h3>
+<div class="paragraph">
+<p>Color-coordinated tags that represent a candidate&#8217;s technical and professional skills, their position interests, and
+their endorsements created by members of the hiring company. Tags are a critical part of the recruitment platform in
+order to create a user-friendly, cohesive view of all
+candidates.Candidate tags are organized as <strong>pink</strong> for skills, <strong>yellow</strong> for positions of interest, and <strong>blue</strong> for
+employee endorsements.</p>
+</div>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p><strong>Add and Edit Commands</strong></p>
+</div>
+<div class="paragraph">
+<p>Tag colors are determined by user input prefixes 'skill' and 'position'</p>
+</div>
+<div class="paragraph">
+<p>For example:
+<code>add</code> n/Amanda Collins &#8230;&#8203;other attributes&#8230;&#8203; skill/Java skill/Powerpoint position/Project Manager</p>
+</div>
+<div class="paragraph">
+<p>Endorsement tags are separately determined by the <code>endorse</code> command and cannot be specified as part of a user profile
+ in the add and edit commands.</p>
+</div>
+<div class="paragraph">
+<p>These prefixes (skill and position) create new SkillsTag objects that specify the type of tag ('skill', 'pos', or
+'endorse') which is stored as an attribute in the SkillsTag class.</p>
+</div>
+<div class="paragraph">
+<p>The type attribute then specifies which tag color attribute is assigned to the SkillsTag, which is then communicated
+to the Storage component.</p>
+</div>
+<div class="paragraph">
+<p>SkillsTag in Logic component communicates to the CSS file in the GUI to change the color.</p>
+</div>
+<div class="paragraph">
+<p>The color attribute is then modeled as a JsonAdaptedTag in the Storage component.</p>
+</div>
+<div class="paragraph">
+<p><strong>IMPORTANT NOTE</strong> the current implementation works with the JSON Constructor by adding a prefix to each <code>tagName</code>
+attribute that represents what tag type the object is. The strings 's:', 'p:', and 'e:' are prepended to each respective
+ skill, position, or endorse tag&#8217;s tagName attribute.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Other commands such as filtering and sorting are currently integrated with this design approach and parse out the
+prefixes to get the correct tag names. This design helps the filter and sort commands differentiate between the three
+tag types in order to properly display the results of their commands and improve user readability.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="alternate-implementation"><a class="link" href="#alternate-implementation">3.2.2. Alternate Implementation</a></h4>
+<div class="paragraph">
+<p><strong>Coming in v2.0</strong></p>
+</div>
+<div class="paragraph">
+<p>Logic Component Changes
+* Instead of representing tag type as an attribute of a SkillsTag object, a <code>Tag</code> interface will be implemented by
+distinct <code>SkillsTag</code>, <code>PositionTag</code>, <code>EndorseTag</code> objects.
+* The tags will have separate adapted JSON objects in order to correctly store the colors in the Storage component.
+* This will replace the current system of
+prepending tagName attributes with the respective tag type prefixes ('s:', 'p:', and 'e:').</p>
+</div>
+<div class="paragraph">
+<p>UI Component Changes
+* While the current implementation makes UI changes in the colors of the tags, the next implementation will have the
+separate tags featured on different lines instead of the current List of tags that has them in a random order.
+* The new view will improve the UI design to make the tags more organized and clear.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/filterDiagram.png" alt="filterDiagram" width="800">
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Sequence Diagram of the Filtering Command</div>
+<div class="content">
+<div class="paragraph">
+<p>=== Filter or/and/clear/reverse feature</p>
+</div>
 <div class="paragraph">
 <p><strong>Usage Format Regarding Current Implementation:</strong></p>
 </div>
@@ -901,8 +1023,9 @@ e.g. if the input is <code>ale</code>, the person with the name <code>Alex, aLex
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="current-implementation-of-filter-command"><a class="link" href="#current-implementation-of-filter-command">3.2.1. Current Implementation of Filter Command</a></h4>
+<div class="paragraph">
+<p>==== Current Implementation of Filter Command</p>
+</div>
 <div class="paragraph">
 <p><strong>Implementation Details:</strong></p>
 </div>
@@ -1042,14 +1165,15 @@ e.g. the 1st index of <code>criterion</code> is set to <code>57</code> regarding
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>==== Alternative Approaches</p>
 </div>
-<div class="sect3">
-<h4 id="alternative-approaches"><a class="link" href="#alternative-approaches">3.2.2. Alternative Approaches</a></h4>
 <div class="paragraph">
 <p>In this title, both Command implementation and Parser implementation will be discussed in 2 parts:</p>
 </div>
-<div class="sect4">
-<h5 id="command-implementation"><a class="link" href="#command-implementation">Command Implementation</a></h5>
+<div class="paragraph">
+<p>===== Command Implementation</p>
+</div>
 <div class="paragraph">
 <p>Instead of adding another parameter in <code>AddressBook</code> class called <code>allPersonsStorage</code>, another approach would be letting <code>persons</code> parameter to hold
 all the unfiltered information and updating <code>filteredPersons</code> parameter in the <code>ModelManager</code> class. <code>filteredPersons</code> is a list of persons that is defined in <code>ModelManager</code>.
@@ -1085,9 +1209,9 @@ it requires additional data to be built (<code>Predicates</code> may need to be 
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>===== Parser Implementation</p>
 </div>
-<div class="sect4">
-<h5 id="parser-implementation"><a class="link" href="#parser-implementation">Parser Implementation</a></h5>
 <div class="paragraph">
 <p>Instead of putting the criterion contents between both <code>PREFIXES</code> and <code>REVERSE PREFIXES</code>, we
 could only add the content after <code>PREFIX</code> (without any <code>REVERSE PREFIX</code> usage) like the addition process .</p>
@@ -1120,15 +1244,15 @@ However in the alternative approach, implementing the input taking with no order
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>==== Testing of Filter Command Design</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.3. Testing of Filter Command Design</a></h4>
 <div class="paragraph">
 <p>The testing methods for filtering is written for 3 different parts:</p>
 </div>
-<div class="sect4">
-<h5 id="filtercommandparsertests"><a class="link" href="#filtercommandparsertests">FilterCommandParserTests</a></h5>
+<div class="paragraph">
+<p>===== FilterCommandParserTests</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -1158,9 +1282,9 @@ However in the alternative approach, implementing the input taking with no order
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>===== FilterCommandTests</p>
 </div>
-<div class="sect4">
-<h5 id="filtercommandtests"><a class="link" href="#filtercommandtests">FilterCommandTests</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1181,9 +1305,9 @@ However in the alternative approach, implementing the input taking with no order
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>===== FilterCommandIntegrationTests</p>
 </div>
-<div class="sect4">
-<h5 id="filtercommandintegrationtests"><a class="link" href="#filtercommandintegrationtests">FilterCommandIntegrationTests</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1197,15 +1321,10 @@ However in the alternative approach, implementing the input taking with no order
 </li>
 </ul>
 </div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="sort-commands"><a class="link" href="#sort-commands">3.3. Sort Commands</a></h3>
-<div class="sect3">
-<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.3.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>There are currently five main sorting methods present: <code>name</code>, <code>surname</code>, <code>gpa</code>, <code>education</code>, <code>skills</code>.
+<p>=== Sort Commands
+==== Current Implementation
+There are currently five main sorting methods present: <code>name</code>, <code>surname</code>, <code>gpa</code>, <code>education</code>, <code>skills</code>.
 There is also a complimentary <code>reverse</code> sort method for each main sorting method.</p>
 </div>
 <div class="ulist">
@@ -1258,28 +1377,24 @@ It takes the <em>current</em> list displayed in the left hand GUI panel and orde
 <div class="paragraph">
 <p><em>(the <strong>current</strong> list means that if filter is on, only those filtered persons shall be sorted and the filter shall remain on)</em></p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="implementation-rational"><a class="link" href="#implementation-rational">3.3.2. Implementation Rational</a></h4>
 <div class="paragraph">
-<p>Despite the risk of slightly increasing the coupling, the aim was to use methods already written and rely on good cohesion.
+<p>==== Implementation Rational
+Despite the risk of slightly increasing the coupling, the aim was to use methods already written and rely on good cohesion.
 For example, once a sort command has correctly written the correctly ordered persons to a <code>List&lt;Person&gt;</code>, rather than duplicating large amounts of code by modifying the already listed persons in the GUI, it shall simply remove the persons in that addressbook version and then immediately re-add them in the correct order.</p>
 </div>
 <div class="paragraph">
 <p>It is of note that the temporary deletion of persons from the addressbook should be foolproof and there should be no way that the sort command ever permanently deletes the addressbook. Furthermore, ensuring the command works with the already implemented undo/redo command should ensure the user still has full control over all the persons in the contact book.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="approaches-considered"><a class="link" href="#approaches-considered">3.3.3. Approaches Considered</a></h4>
 <div class="paragraph">
-<p>When writing sort commands, there were two approaches considered: modify the indices of all persons and then refresh the left-hand GUI panel with this new list; or temporarily delete the list of persons and then add a new list of correctly ordered persons.</p>
+<p>==== Approaches Considered
+When writing sort commands, there were two approaches considered: modify the indices of all persons and then refresh the left-hand GUI panel with this new list; or temporarily delete the list of persons and then add a new list of correctly ordered persons.</p>
 </div>
 <div class="paragraph">
 <p>Elements of lists in Java are ordered by when they were added. Sorting is possible using <em>Collections</em>, however this requires them to be strings. Since the Recruit Me application contains lists of various types, typically <em>Person</em>, there is no immediate compatibility with <em>Collections</em>. Furthermore it was suspected that to simply modify the indices of persons, a lot of duplicate code would be need to be written since this aspect of addressbook-level4 was not easily modifiable. Because of this the second method was opted for.</p>
 </div>
+<div class="paragraph">
+<p>==== Adding a New Sort Command</p>
 </div>
-<div class="sect3">
-<h4 id="adding-a-new-sort-command"><a class="link" href="#adding-a-new-sort-command">3.3.4. Adding a New Sort Command</a></h4>
 <div class="paragraph">
 <p>To add a new sort command, the following classes should be altered accordingly:</p>
 </div>
@@ -1308,33 +1423,141 @@ The developer should also add the necessary testing methods in <code>SortCommand
 (TODO: INSERT CLASS DIAGRAM FOR v1.4)
 (TODO: INSERT SEQUENCE DIAGRAM FOR v1.4)</p>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="endorse-command"><a class="link" href="#endorse-command">3.4. Endorse Command</a></h3>
 <div class="paragraph">
-<p>====Current Implementation
-The candidate tags are organized as pink for skills, yellow for positions of interest, and blue for employee
-endorsements.
-The endorse command allows employees to select candidates by their index and create an endorsement tag.
-There is a complementary 'clear' function for removing endorsement tags.</p>
+<p>=== Endorse Command</p>
+</div>
+<div class="paragraph">
+<p>==== Overview</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A command for the use of company employees that want to assist in the hiring process and find the candidates that
+will work best in their teams.</p>
+</li>
+<li>
+<p>The <code>endorse</code> command allows employees to select candidates by their index and create an endorsement tag to help
+candidates stand out in the recruiting platform.</p>
+</li>
+<li>
+<p>There is a complementary <code>'clear'</code> function for removing endorsement tags if an employee wants to rescind his
+recommendation.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EndorseCommandDiagram.png" alt="EndorseCommandDiagram" width="800">
 </div>
 </div>
-<div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></h3>
+<div class="paragraph">
+<p>==== Current Implementation</p>
+</div>
+<div class="paragraph">
+<p>Endorsing mechanism is facilitated by <code>AddressBook</code>. Like other commands, the Logic Manager parses the user input and
+recognizes the 'endorse' keyword as the user calling the <code>endorse</code> command and sending the arguments to the
+<code>EndorseCommandParser</code>. The parser then interprets the specified index as an <code>Index</code> object and identifies the
+candidate to endorse. A new tag of type 'endorse' is created and added to the set of tags associated
+with the specific <code>Person</code> object. The tag is shaded teal to represent an endorsement and a "e:" prefix is added to the
+tag name in order
+to save the color correctly as a <code>JsonAdaptedTag</code> (as described in Section 3.2: Colored Tags).</p>
+</div>
+<div class="paragraph">
+<p><strong>Clearing Endorsements</strong></p>
+</div>
+<div class="paragraph">
+<p>Endorsing can be reversed through the <code>'clear'</code> keyword. When an employee has previously endorsed a candidate and
+then wants to remove that endorsement, he or she can include 'clear' in their endorse command input before the index
+is specified. The <code>EndorseCommandParser</code> recognizes the clear command and specifies that this is a clearing process
+in the instantiation of a new <code>EndorseCommand</code> object. To specify a normal endorse command, the <code>EndorseCommand</code>
+object is passed a process code of 0 in the constructor and a process code of 1 to show that a clearing command has
+been called. The object recognizes the passing of a clearing process and removes the tag of the specified employee in
+ the <code>Person</code> class.</p>
+</div>
+<div class="paragraph">
+<p><strong>Incorporation With Other Commands</strong></p>
+</div>
+<div class="paragraph">
+<p><em><strong>Add and Edit Commands</strong></em></p>
+</div>
+<div class="paragraph">
+<p>The add command does not have prefixes for creating endorsement tags so that candidates cannot add any company
+endorsements when they <code>add</code> themselves to the platform or when they <code>edit</code> their profile.</p>
+</div>
+<div class="paragraph">
+<p>Because endorsements are only created and removed by employees, they are saved as part of the candidate profile and
+cannot be changed by a candidate editing their skills and position tags. If a candidate adds or removes tags from
+their profile, any employee endorsements that they have received will be maintained.</p>
+</div>
+<div class="paragraph">
+<p><em><strong>Filter and Sort Commands</strong></em></p>
+</div>
+<div class="paragraph">
+<p>In order for the command to be functional in a filtered or sorted view, the candidate is found in the model through
+the filtered persons list. When a user filters by specified parameters and/or sorts the results by a
+profile characteristic, using the endorse command on the new indexed results will still result in a successful
+endorsement of the correct candidate.</p>
+</div>
+<div class="paragraph">
+<p>==== Endorse Command Tests</p>
+</div>
+<div class="paragraph">
+<p>Tests the implementation of the endorse command and the endorse clear command. Checks that the endorse command
+correctly creates an endorsement tag and endorses the correct indexed person. Also checks that the endorse clear
+command removes an endorsement tag from the correct indexed person.
+The following use cases are tested:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Endorses the correct index and correct person at the specified index</p>
+</li>
+<li>
+<p>Clears endorsement of correct person at the correct index</p>
+</li>
+<li>
+<p>Accepts a valid employee name</p>
+</li>
+<li>
+<p>Accepts a valid integer as the index</p>
+</li>
+<li>
+<p>Cannot endorse a candidate more than once</p>
+</li>
+<li>
+<p>Cannot clear an endorsement that has never been made</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>==== Alternate Implementation</p>
+</div>
+<div class="paragraph">
+<p><em>Coming in v2.0</em></p>
+</div>
+<div class="paragraph">
+<p>Separating exclusive features for different users so that only candidates can change their skills and only employees
+can endorse candidates. We will differentiate the experiences that the distinct users (candidates,
+recruiters, and employees) can have with the platform and make a more individual view for each person. Distinguishing
+ which user is using the system will allow us to prevent some users from using functions that are only meant for
+ others, such as candidates using the endorse function or employees editing a candidate profile.</p>
+</div>
+<div class="paragraph">
+<p>=== [Proposed] Data Encryption</p>
+</div>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
+<div class="paragraph">
+<p>=== Logging</p>
 </div>
-<div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">[Implementation-Configuration]</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1363,14 +1586,14 @@ There is a complementary 'clear' function for removing endorsement tags.</p>
 </li>
 </ul>
 </div>
+<div id="Implementation-Configuration" class="paragraph">
+<p>=== Configuration</p>
 </div>
-<div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <p>[[Implementation-Sort Commands]]
 === Sort Commands</p>
@@ -1393,9 +1616,10 @@ There is a complementary 'clear' function for removing endorsement tags.</p>
 <div class="paragraph">
 <p>Two sorting methods are currently present: <code>alphabetical</code> and <code>skills</code>&#8230;&#8203;</p>
 </div>
-<div class="paragraph">
-<p>=== Education and GPA</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="education-and-gpa"><a class="link" href="#education-and-gpa">3.3. Education and GPA</a></h3>
 <div class="paragraph">
 <p>New parameters for perspective employees to add to their information. Employers are able to look at this information to determine if the person is suitable for the position at the company. Education and GPA can be use to filer or sort the perspective employees.</p>
 </div>
@@ -1414,9 +1638,12 @@ There is a complementary 'clear' function for removing endorsement tags.</p>
 <div class="paragraph">
 <p>NOT COMPLETE.</p>
 </div>
-<div class="paragraph">
-<p>== Documentation</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="documentation"><a class="link" href="#documentation">4. Documentation</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>We use asciidoc for writing documentation.</p>
 </div>
@@ -1432,22 +1659,21 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>=== Editing Documentation</p>
-</div>
+<div class="sect2">
+<h3 id="editing-documentation"><a class="link" href="#editing-documentation">4.1. Editing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to learn how to render <code>.adoc</code> files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your <code>.adoc</code> files in real-time.</p>
 </div>
-<div class="paragraph">
-<p>=== Publishing Documentation</p>
 </div>
+<div class="sect2">
+<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">4.2. Publishing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingTravis.html#deploying-github-pages">UsingTravis.adoc</a> to learn how to deploy GitHub Pages using Travis.</p>
 </div>
-<div class="paragraph">
-<p>=== Converting Documentation to PDF format</p>
 </div>
+<div class="sect2">
+<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">4.3. Converting Documentation to PDF format</a></h3>
 <div class="paragraph">
 <p>We use <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a> for converting documentation to PDF format, as Chrome&#8217;s PDF engine preserves hyperlinks used in webpages.</p>
 </div>
@@ -1476,9 +1702,9 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 </div>
 <div class="title">Figure 9. Saving documentation as PDF files in Chrome</div>
 </div>
-<div id="Docs-SiteWideDocSettings" class="paragraph">
-<p>=== Site-wide Documentation Settings</p>
 </div>
+<div class="sect2">
+<h3 id="Docs-SiteWideDocSettings"><a class="link" href="#Docs-SiteWideDocSettings">4.4. Site-wide Documentation Settings</a></h3>
 <div class="paragraph">
 <p>The <a href="https://github.com/se-edu/addressbook-level4/tree/master/build.gradle"><code>build.gradle</code></a> file specifies some project-specific <a href="https://asciidoctor.org/docs/user-manual/#attributes">asciidoc attributes</a> which affects how all documentation files within this project are rendered.</p>
 </div>
@@ -1535,9 +1761,9 @@ This will render the SE-EDU navigation bar at the top of the page, and add some 
 </tr>
 </tbody>
 </table>
-<div id="Docs-PerFileDocSettings" class="paragraph">
-<p>=== Per-file Documentation Settings</p>
 </div>
+<div class="sect2">
+<h3 id="Docs-PerFileDocSettings"><a class="link" href="#Docs-PerFileDocSettings">4.5. Per-file Documentation Settings</a></h3>
 <div class="paragraph">
 <p>Each <code>.adoc</code> file may also specify some file-specific <a href="https://asciidoctor.org/docs/user-manual/#attributes">asciidoc attributes</a> which affects how the file is rendered.</p>
 </div>
@@ -1592,9 +1818,9 @@ One of: <code>UserGuide</code>, <code>DeveloperGuide</code>, <code>LearningOutco
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>=== Site Template</p>
 </div>
+<div class="sect2">
+<h3 id="site-template"><a class="link" href="#site-template">4.6. Site Template</a></h3>
 <div class="paragraph">
 <p>The files in <a href="https://github.com/se-edu/addressbook-level4/tree/master/docs/stylesheets"><code>docs/stylesheets</code></a> are the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS stylesheets</a> of the site.
 You can modify them to change some properties of the site&#8217;s design.</p>
@@ -1619,12 +1845,14 @@ The SE-EDU team does not provide support for modified template files.</p>
 </tr>
 </table>
 </div>
-<div id="Testing" class="paragraph">
-<p>== Testing</p>
 </div>
-<div class="paragraph">
-<p>=== Running Tests</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="Testing"><a class="link" href="#Testing">5. Testing</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="running-tests"><a class="link" href="#running-tests">5.1. Running Tests</a></h3>
 <div class="paragraph">
 <p>There are three ways to run tests.</p>
 </div>
@@ -1684,9 +1912,9 @@ See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run 
 <div class="paragraph">
 <p>To run tests in headless mode, open a console and run the command <code>gradlew clean headless allTests</code> (Mac/Linux: <code>./gradlew clean headless allTests</code>)</p>
 </div>
-<div class="paragraph">
-<p>=== Types of tests</p>
 </div>
+<div class="sect2">
+<h3 id="types-of-tests"><a class="link" href="#types-of-tests">5.2. Types of tests</a></h3>
 <div class="paragraph">
 <p>We have two types of tests:</p>
 </div>
@@ -1726,9 +1954,11 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="troubleshooting-testing"><a class="link" href="#troubleshooting-testing">5.3. Troubleshooting Testing</a></h3>
 <div class="paragraph">
-<p>=== Troubleshooting Testing
-<strong>Problem: <code>HelpWindowTest</code> fails with a <code>NullPointerException</code>.</strong></p>
+<p><strong>Problem: <code>HelpWindowTest</code> fails with a <code>NullPointerException</code>.</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -1740,34 +1970,38 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>== Dev Ops</p>
 </div>
-<div class="paragraph">
-<p>=== Build Automation</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="dev-ops"><a class="link" href="#dev-ops">6. Dev Ops</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="build-automation"><a class="link" href="#build-automation">6.1. Build Automation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingGradle.html">UsingGradle.adoc</a> to learn how to use Gradle for build automation.</p>
 </div>
-<div class="paragraph">
-<p>=== Continuous Integration</p>
 </div>
+<div class="sect2">
+<h3 id="continuous-integration"><a class="link" href="#continuous-integration">6.2. Continuous Integration</a></h3>
 <div class="paragraph">
 <p>We use <a href="https://travis-ci.org/">Travis CI</a> and <a href="https://www.appveyor.com/">AppVeyor</a> to perform <em>Continuous Integration</em> on our projects. See <a href="UsingTravis.html">UsingTravis.adoc</a> and <a href="UsingAppVeyor.html">UsingAppVeyor.adoc</a> for more details.</p>
 </div>
-<div class="paragraph">
-<p>=== Coverage Reporting</p>
 </div>
+<div class="sect2">
+<h3 id="coverage-reporting"><a class="link" href="#coverage-reporting">6.3. Coverage Reporting</a></h3>
 <div class="paragraph">
 <p>We use <a href="https://coveralls.io/">Coveralls</a> to track the code coverage of our projects. See <a href="UsingCoveralls.html">UsingCoveralls.adoc</a> for more details.</p>
 </div>
-<div class="paragraph">
-<p>=== Documentation Previews
-When a pull request has changes to asciidoc files, you can use <a href="https://www.netlify.com/">Netlify</a> to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <a href="UsingNetlify.html">UsingNetlify.adoc</a> for more details.</p>
 </div>
+<div class="sect2">
+<h3 id="documentation-previews"><a class="link" href="#documentation-previews">6.4. Documentation Previews</a></h3>
 <div class="paragraph">
-<p>=== Making a Release</p>
+<p>When a pull request has changes to asciidoc files, you can use <a href="https://www.netlify.com/">Netlify</a> to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <a href="UsingNetlify.html">UsingNetlify.adoc</a> for more details.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="making-a-release"><a class="link" href="#making-a-release">6.5. Making a Release</a></h3>
 <div class="paragraph">
 <p>Here are the steps to create a new release.</p>
 </div>
@@ -1787,9 +2021,9 @@ When a pull request has changes to asciidoc files, you can use <a href="https://
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>=== Managing Dependencies</p>
 </div>
+<div class="sect2">
+<h3 id="managing-dependencies"><a class="link" href="#managing-dependencies">6.6. Managing Dependencies</a></h3>
 <div class="paragraph">
 <p>A project often depends on third-party libraries. For example, Address Book depends on the <a href="https://github.com/FasterXML/jackson">Jackson library</a> for JSON parsing. Managing these <em>dependencies</em> can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives:</p>
 </div>
@@ -1803,25 +2037,27 @@ When a pull request has changes to asciidoc files, you can use <a href="https://
 </li>
 </ol>
 </div>
-<div id="GetStartedProgramming" class="paragraph">
-<p>== Suggested Programming Tasks to Get Started</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="GetStartedProgramming"><a class="link" href="#GetStartedProgramming">Appendix A: Suggested Programming Tasks to Get Started</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Suggested path for new programmers:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <a href="#GetStartedProgramming-EachComponent">[GetStartedProgramming-EachComponent]</a>.</p>
+<p>First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <a href="#GetStartedProgramming-EachComponent">Section A.1, &#8220;Improving each component&#8221;</a>.</p>
 </li>
 <li>
-<p>Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <a href="#GetStartedProgramming-RemarkCommand">[GetStartedProgramming-RemarkCommand]</a> explains how to go about adding such a feature.</p>
+<p>Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <a href="#GetStartedProgramming-RemarkCommand">Section A.2, &#8220;Creating a new command: <code>remark</code>&#8221;</a> explains how to go about adding such a feature.</p>
 </li>
 </ol>
 </div>
-<div id="GetStartedProgramming-EachComponent" class="paragraph">
-<p>=== Improving each component</p>
-</div>
+<div class="sect2">
+<h3 id="GetStartedProgramming-EachComponent"><a class="link" href="#GetStartedProgramming-EachComponent">A.1. Improving each component</a></h3>
 <div class="paragraph">
 <p>Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).</p>
 </div>
@@ -2229,18 +2465,19 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 </li>
 </ol>
 </div>
-<div id="GetStartedProgramming-RemarkCommand" class="paragraph">
-<p>=== Creating a new command: <code>remark</code></p>
 </div>
+<div class="sect2">
+<h3 id="GetStartedProgramming-RemarkCommand"><a class="link" href="#GetStartedProgramming-RemarkCommand">A.2. Creating a new command: <code>remark</code></a></h3>
 <div class="paragraph">
 <p>By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.</p>
 </div>
 <div class="paragraph">
 <p><strong>Scenario:</strong> You are a software maintainer for <code>addressbook</code>, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible <code>remark</code> field for each contact, rather than relying on tags alone. After designing the specification for the <code>remark</code> command, you are convinced that this feature is worth implementing. Your job is to implement the <code>remark</code> command.</p>
 </div>
+<div class="sect3">
+<h4 id="description"><a class="link" href="#description">A.2.1. Description</a></h4>
 <div class="paragraph">
-<p>==== Description
-Edits the remark for a person specified in the <code>INDEX</code>.<br>
+<p>Edits the remark for a person specified in the <code>INDEX</code>.<br>
 Format: <code>remark INDEX r/[REMARK]</code></p>
 </div>
 <div class="paragraph">
@@ -2258,12 +2495,13 @@ Removes the remark for the first person.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>==== Step-by-step Instructions</p>
 </div>
+<div class="sect3">
+<h4 id="step-by-step-instructions"><a class="link" href="#step-by-step-instructions">A.2.2. Step-by-step Instructions</a></h4>
+<div class="sect4">
+<h5 id="step-1-logic-teach-the-app-to-accept-remark-which-does-nothing"><a class="link" href="#step-1-logic-teach-the-app-to-accept-remark-which-does-nothing">[Step 1] Logic: Teach the app to accept 'remark' which does nothing</a></h5>
 <div class="paragraph">
-<p>===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let&#8217;s start by teaching the application how to parse a <code>remark</code> command. We will add the logic of <code>remark</code> later.</p>
+<p>Let&#8217;s start by teaching the application how to parse a <code>remark</code> command. We will add the logic of <code>remark</code> later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2291,9 +2529,11 @@ Let&#8217;s start by teaching the application how to parse a <code>remark</code>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-2-logic-teach-the-app-to-accept-remark-arguments"><a class="link" href="#step-2-logic-teach-the-app-to-accept-remark-arguments">[Step 2] Logic: Teach the app to accept 'remark' arguments</a></h5>
 <div class="paragraph">
-<p>===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let&#8217;s teach the application to parse arguments that our <code>remark</code> command will accept. E.g. <code>1 r/Likes to drink coffee.</code></p>
+<p>Let&#8217;s teach the application to parse arguments that our <code>remark</code> command will accept. E.g. <code>1 r/Likes to drink coffee.</code></p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2328,9 +2568,11 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></a></h5>
 <div class="paragraph">
-<p>===== [Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code>
-Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2355,9 +2597,11 @@ Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addr
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-4-model-add-code-remark-code-class"><a class="link" href="#step-4-model-add-code-remark-code-class">[Step 4] Model: Add <code>Remark</code> class</a></h5>
 <div class="paragraph">
-<p>===== [Step 4] Model: Add <code>Remark</code> class
-We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2382,9 +2626,11 @@ We have to properly encapsulate the remark in our <a href="https://github.com/se
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-5-model-modify-code-person-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-person-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field</a></h5>
 <div class="paragraph">
-<p>===== [Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field
-Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2402,9 +2648,11 @@ Now we have the <code>Remark</code> class, we need to actually use it inside <a 
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-6-storage-add-code-remark-code-field-to-code-jsonadaptedperson-code-class"><a class="link" href="#step-6-storage-add-code-remark-code-field-to-code-jsonadaptedperson-code-class">[Step 6] Storage: Add <code>Remark</code> field to <code>JsonAdaptedPerson</code> class</a></h5>
 <div class="paragraph">
-<p>===== [Step 6] Storage: Add <code>Remark</code> field to <code>JsonAdaptedPerson</code> class
-We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonAdaptedPerson.java"><code>JsonAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
+<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonAdaptedPerson.java"><code>JsonAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2426,9 +2674,11 @@ We now have <code>Remark</code> s for <code>Person</code> s, but they will be go
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-6b-test-add-withremark-for-code-personbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-personbuilder-code">[Step 6b] Test: Add withRemark() for <code>PersonBuilder</code></a></h5>
 <div class="paragraph">
-<p>===== [Step 6b] Test: Add withRemark() for <code>PersonBuilder</code>
-Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Tests:</strong></p>
@@ -2443,9 +2693,11 @@ Since <code>Person</code> can now have a <code>Remark</code>, we should add a he
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-7-ui-connect-code-remark-code-field-to-code-personcard-code"><a class="link" href="#step-7-ui-connect-code-remark-code-field-to-code-personcard-code">[Step 7] Ui: Connect <code>Remark</code> field to <code>PersonCard</code></a></h5>
 <div class="paragraph">
-<p>===== [Step 7] Ui: Connect <code>Remark</code> field to <code>PersonCard</code>
-Our remark label in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
+<p>Our remark label in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2467,9 +2719,11 @@ Our remark label in <a href="https://github.com/se-edu/addressbook-level4/tree/m
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="step-8-logic-implement-code-remarkcommand-execute-code-logic"><a class="link" href="#step-8-logic-implement-code-remarkcommand-execute-code-logic">[Step 8] Logic: Implement <code>RemarkCommand#execute()</code> logic</a></h5>
 <div class="paragraph">
-<p>===== [Step 8] Logic: Implement <code>RemarkCommand#execute()</code> logic
-We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the remarks. Let&#8217;s finish it up by adding in actual logic for our <code>remark</code> command.</p>
+<p>We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the remarks. Let&#8217;s finish it up by adding in actual logic for our <code>remark</code> command.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2491,15 +2745,20 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>==== Full Solution</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="full-solution"><a class="link" href="#full-solution">A.2.3. Full Solution</a></h4>
 <div class="paragraph">
 <p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/599">PR</a> for the step-by-step solution.</p>
 </div>
-<div class="paragraph">
-<p>== Product Scope - Target user profile</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="product-scope-target-user-profile"><a class="link" href="#product-scope-target-user-profile">Appendix B: Product Scope - Target user profile</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><strong>General Needs</strong>:</p>
 </div>
@@ -2538,9 +2797,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <div class="paragraph">
 <p><strong>Value proposition</strong>: manage contacts faster than a typical mouse/GUI driven app</p>
 </div>
-<div class="paragraph">
-<p>== User Stories</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="user-stories"><a class="link" href="#user-stories">Appendix C: User Stories</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code></p>
 </div>
@@ -2637,9 +2898,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <div class="paragraph">
 <p><em>{More to be added}</em></p>
 </div>
-<div class="paragraph">
-<p>== Use Cases</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="use-cases"><a class="link" href="#use-cases">Appendix D: Use Cases</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
@@ -2836,9 +3099,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>== Non Functional Requirements</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2855,9 +3120,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 <div class="paragraph">
 <p><em>{More to be added}</em></p>
 </div>
-<div class="paragraph">
-<p>== Glossary</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="glossary"><a class="link" href="#glossary">Appendix F: Glossary</a></h2>
+<div class="sectionbody">
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
@@ -2870,9 +3137,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </dd>
 </dl>
 </div>
-<div class="paragraph">
-<p>== Product Survey</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="product-survey"><a class="link" href="#product-survey">Appendix G: Product Survey</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><strong>Product Name</strong></p>
 </div>
@@ -2905,9 +3174,11 @@ We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>== Instructions for Manual Testing</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Given below are instructions to test the app manually.</p>
 </div>
@@ -2923,9 +3194,8 @@ These instructions only provide a starting point for testers to work on; testers
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>=== Launch and Shutdown</p>
-</div>
+<div class="sect2">
+<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">H.1. Launch and Shutdown</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2961,9 +3231,9 @@ Expected: The most recent window size and location is retained.</p>
 <div class="paragraph">
 <p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
-<div class="paragraph">
-<p>=== Deleting a person</p>
 </div>
+<div class="sect2">
+<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">H.2. Deleting a person</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2993,9 +3263,9 @@ Expected: Similar to previous.</p>
 <div class="paragraph">
 <p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
-<div class="paragraph">
-<p>=== Saving data</p>
 </div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">H.3. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3015,6 +3285,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:39:29 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:40:11 UTC</div></div></div></body></html>

@@ -20,7 +20,7 @@
 <li><a href="#filtering-recruit-me-code-filter-code">3.5. Filtering Recruit Me: <code>filter</code></a></li>
 <li><a href="#clearing-the-filter-in-recruit-me-code-filter-clear-code">3.6. Clearing the filter in Recruit Me: <code>filter clear</code></a></li>
 <li><a href="#reversing-the-filter-in-recruit-me-code-filter-reverse-code">3.7. Reversing the filter in Recruit Me: <code>filter reverse</code></a></li>
-<li><a href="#approve-persons-by-employee-name-code-endorse-code">3.8. Approve persons by employee name: <code>endorse</code></a></li>
+<li><a href="#employee-approval-of-candidates-code-endorse-code">3.8. Employee approval of candidates: <code>endorse</code></a></li>
 <li><a href="#locating-persons-by-name-code-find-code">3.9. Locating persons by name: <code>find</code></a></li>
 <li><a href="#sorting-persons-code-sort-code">3.10. Sorting persons: <code>sort</code></a></li>
 <li><a href="#deleting-a-person-code-delete-code">3.11. Deleting a person : <code>delete</code></a></li>
@@ -107,7 +107,8 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
 </li>
 <li>
-<p>Items in square brackets are optional e.g <code>n/NAME [skill/TAG]</code> can be used as <code>n/John Doe t/friend</code> or as <code>n/John Doe</code>.</p>
+<p>Items in square brackets are optional e.g <code>n/NAME [skill/TAG]</code> can be used as <code>n/John Doe skill/friend
+position/Systems Analyst</code> or as <code>n/John Doe</code>.</p>
 </li>
 <li>
 <p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[skill/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>skill/Java</code>, <code>skill/Excel skill/leadership</code> etc.</p>
@@ -128,8 +129,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a candidate to Recruit Me<br>
-Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg/DEGREE-LEVEL [skill/SKILL]&#8230;&#8203; [position/POSITION]&#8230;&#8203;</code></p>
+<p>Adds a candidate to Recruit Me<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg/DEGREE-LEVEL [skill/SKILL]&#8230;&#8203; [position/POSITION]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -205,7 +208,8 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/EDUCATION] [g/GPA] [deg
 existing endorsement tags.</p>
 </li>
 <li>
-<p>You can remove all the person&#8217;s tags by typing <code>skill/</code> or <code>position/</code> without specifying any tags after it.</p>
+<p>You can remove all the person&#8217;s tags, except for endorsement tags, by typing <code>skill/</code> or 'position/' without
+specifying any tags after it.</p>
 </li>
 </ul>
 </div>
@@ -222,7 +226,7 @@ Edits the phone number and email address of the 1st person to be <code>91234567<
 </li>
 <li>
 <p><code>edit 2 n/Betsy Crower skill/</code><br>
-Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags except endorsement tags.</p>
+Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags except for endorsements.</p>
 </li>
 </ul>
 </div>
@@ -392,10 +396,17 @@ Format: <code>filter reverse</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="approve-persons-by-employee-name-code-endorse-code"><a class="link" href="#approve-persons-by-employee-name-code-endorse-code">3.8. Approve persons by employee name: <code>endorse</code></a></h3>
+<h3 id="employee-approval-of-candidates-code-endorse-code"><a class="link" href="#employee-approval-of-candidates-code-endorse-code">3.8. Employee approval of candidates: <code>endorse</code></a></h3>
 <div class="paragraph">
 <p>Endorses an existing candidate in RecruitMe.<br>
 Format: <code>endorse [clear] INDEX n/YOUR NAME</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Feature for employees to navigate the recruiting platform and choose candidates that they want hired</p>
+</li>
+</ul>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -408,7 +419,7 @@ Format: <code>endorse [clear] INDEX n/YOUR NAME</code></p>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
-<p>All ASCII characters accepted, not limited to alphanumeric</p>
+<p>All ASCII characters accepted, not limited to alphanumeric characters</p>
 </li>
 <li>
 <p>Error will be thrown if an employee tries to endorse a candidate more than once</p>
@@ -418,10 +429,13 @@ Format: <code>endorse [clear] INDEX n/YOUR NAME</code></p>
 existing endorsement tags.</p>
 </li>
 <li>
-<p>Removes endorsement of a person at the specified index using <code>clear</code> keyword</p>
+<p>Optional <strong>clear</strong> keyword will delete the employee endorsement at a specified index</p>
 </li>
 <li>
-<p>Error will be thrown if an employee tries to unendorse a candidate he or she has not previously endorsed</p>
+<p>Error will be thrown if an employee tries to un-endorse a candidate he or she has not previously endorsed</p>
+</li>
+<li>
+<p>Compatible with filter and sorting methods for easy navigatio</p>
 </li>
 </ul>
 </div>
@@ -1036,6 +1050,11 @@ e.g. <code>sort name</code><br>
 e.g. <code>sort reverse education</code></p>
 </li>
 <li>
+<p><strong>Endorse</strong> : <code>endorse [clear] INDEX n/NAME</code><br>
+e.g. <code>endorse 1 n/Bill Gates</code>+
+e.g. <code>endorse clear 1 n/Bill Gates</code></p>
+</li>
+<li>
 <p><strong>List</strong> : <code>list</code></p>
 </li>
 <li>
@@ -1057,4 +1076,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:39:29 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:40:11 UTC</div></div></div></body></html>
