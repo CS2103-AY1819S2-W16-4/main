@@ -1195,45 +1195,17 @@ However in the alternative approach, implementing the input taking with no order
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.4. Combining the Command With Other Commands</a></h4>
-<div class="paragraph">
-<p>Since a new parameter is added to the <code>AddressBook</code> class, some changes should have done to adjust the existing processes to
-be used at the same time with filtering commands.</p>
-</div>
-<div class="sect4">
-<h5 id="undo-redo-command"><a class="link" href="#undo-redo-command">Undo/Redo Command</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>A new local boolean parameter is added to the <code>AddressBook</code> class to hold if in that step the filtering exists or not. This addition is important for not losing the filtering information, not losing the storage data as a result of <code>undo/redo</code> processes, when filtering is active and being able to use <code>clearFilter()</code>, if undo and redo commands are used when filtering is active.</p>
-</li>
-<li>
-<p><code>resetData</code> method is modified in order to reset the <code>allPersonsStorage</code> parameter if needed.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="add-edit-and-delete-commands"><a class="link" href="#add-edit-and-delete-commands">Add, Edit and Delete Commands</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>delete</code> and <code>edit</code> processes are working without clearing the filter.</p>
-</li>
-<li>
-<p><code>add</code> method clears the filter when a new person is added. Because, all the previous filtering are not saved in anywhere, so we cannot control if the newly added person matches
-with the filtering criterion. Thus, all the filtering is cleared.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="other-commands"><a class="link" href="#other-commands">Other Commands</a></h5>
-<div class="paragraph">
-<p>These are the ones that requires almost no changes or only small amount of changes to be compatible with filtering.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Since add command changes the list and filter criterion applied before is not saved in any parameter, adding someone automatically clears the filter.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -3055,4 +3027,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 11:30:47 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 11:43:15 UTC</div></div></div></body></html>
