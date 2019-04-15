@@ -37,16 +37,16 @@
 <p>command allows an employee to add their name as a special blue tag to a candidate&#8217;s profile</p>
 </li>
 <li>
-<p>accepts all ASCII input, not just limited to alphanumeric</p>
+<p>command&#8217;s clear option allows employee to rescind their endorsement and remove the blue tag</p>
 </li>
 <li>
-<p>if a candidate edits his or her tags the employee endorsement will not be deleted</p>
+<p>if a candidate edits his or her tags the employee endorsements will not be deleted</p>
 </li>
 <li>
 <p>command accepts all characters and is not limited to alphanumeric input</p>
 </li>
 <li>
-<p>works with filtering command so a manager can filter by a specific employee to see which candidate&#8217;s he or she has      endorsed</p>
+<p>works with filtering and sorting methods to endorse correct candidates even in different views</p>
 </li>
 </ul>
 </div>
@@ -55,7 +55,7 @@
 </div>
 </li>
 <li>
-<p><strong>Minor enhancement</strong>: Diverse Tag Functionality</p>
+<p><strong>Minor enhancement</strong>: Colored Tag Feature</p>
 <div class="ulist">
 <ul>
 <li>
@@ -65,57 +65,333 @@
 <p>Present skills and position tags in different colors for recruiters to get a better view of the candidate</p>
 </li>
 <li>
+<p>Change how JsonAdaptedTags are stored in order to parse a tag&#8217;s name and understand its tag type</p>
+</li>
+<li>
 <p>Allow more than just alphanumeric input for the skill/position options</p>
+<div class="literalblock">
+<div class="content">
+<pre>Additional Minor Contributions:
+- Created the group repository and project
+- Set up all Travis and auto-publishing documentation</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-contributions"><a class="link" href="#code-contributions">Code Contributions</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RepoSense Link for my contributions to the code: <a href="https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&amp;search=abwilli" class="bare">https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&amp;search=abwilli</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
-</tr>
-</tbody>
-</table>
+<div class="sect2">
+<h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">Adding a person: <code>add</code></a></h3>
+<div class="paragraph">
+<p>Adds a candidate to Recruit Me<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL  d/EDUCATION g/GPA a/ADDRESS deg/DEGREE-LEVEL [skill/SKILL]&#8230;&#8203; [position/POSITION]&#8230;&#8203;</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A candidate can have any number of skill/position tags (including 0)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">Editing a person : <code>edit</code></a></h3>
+<div class="paragraph">
+<p>Edits an existing candidate in Recruit Me.<br>
+Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/EDUCATION] [g/GPA] [deg/DEGREE-LEVEL] [a/ADDRESS] [skill/TAG]&#8230;&#8203; [position/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When editing tags, the existing tags of the person will be removed (i.e adding of tags is not cumulative, both skills and positions will be changed after editing one of them) except for
+existing endorsement tags.</p>
+</li>
+<li>
+<p>You can remove all the person&#8217;s tags, except for endorsement tags, by typing <code>skill/</code> or 'position/' without
+specifying any tags after it.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="employee-approval-of-candidates-code-endorse-code"><a class="link" href="#employee-approval-of-candidates-code-endorse-code">Employee approval of candidates: <code>endorse</code></a></h3>
+<div class="paragraph">
+<p>Endorses an existing candidate in RecruitMe.<br>
+Format: <code>endorse [clear] INDEX n/YOUR NAME</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Feature for employees to navigate the recruiting platform and choose candidates that they want hired</p>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Endorses the person at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed person list.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>All ASCII characters accepted, not limited to alphanumeric characters</p>
+</li>
+<li>
+<p>Error will be thrown if an employee tries to endorse a candidate more than once</p>
+</li>
+<li>
+<p>When editing tags, the existing tags of the person will be removed (i.e adding of tags is not cumulative) except for
+existing endorsement tags.</p>
+</li>
+<li>
+<p>Optional <strong>clear</strong> keyword will delete the employee endorsement at a specified index</p>
+</li>
+<li>
+<p>Error will be thrown if an employee tries to un-endorse a candidate he or she has not previously endorsed</p>
+</li>
+<li>
+<p>Compatible with filter and sorting methods for easy navigation</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>endorse 1 n/Steve Jobs</code>
+Adds a blue tag to the candidate at the <code>1</code> index with the text <code>Steve Jobs</code></p>
+</li>
+<li>
+<p><code>endorse clear 1 n/Steve Jobs</code>
+Removes 'Steve Jobs' blue tag from the candidate at the <code>1</code> index</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>include::../UserGuide.adoc</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
-</tr>
-</tbody>
-</table>
+<div class="sect2">
+<h3 id="colored-tag-feature"><a class="link" href="#colored-tag-feature">Colored Tag Feature</a></h3>
+<div class="paragraph">
+<p>Color-coordinated tags that represent a candidate&#8217;s technical and professional skills, their position interests, and
+their endorsements created by members of the hiring company. Tags are a critical part of the recruitment platform in
+order to create a user-friendly, cohesive view of all
+candidates.Candidate tags are organized as <strong>pink</strong> for skills, <strong>yellow</strong> for positions of interest, and <strong>blue</strong> for
+employee endorsements.</p>
+</div>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p><strong>Add and Edit Commands</strong></p>
+</div>
+<div class="paragraph">
+<p>Tag colors are determined by user input prefixes 'skill' and 'position'</p>
+</div>
+<div class="paragraph">
+<p>For example:
+<code>add</code> n/Amanda Collins &#8230;&#8203;other attributes&#8230;&#8203; skill/Java skill/Powerpoint position/Project Manager</p>
+</div>
+<div class="paragraph">
+<p>Endorsement tags are separately determined by the <code>endorse</code> command and cannot be specified as part of a user profile
+ in the add and edit commands.</p>
+</div>
+<div class="paragraph">
+<p>These prefixes (skill and position) create new SkillsTag objects that specify the type of tag ('skill', 'pos', or
+'endorse') which is stored as an attribute in the SkillsTag class.</p>
+</div>
+<div class="paragraph">
+<p>The type attribute then specifies which tag color attribute is assigned to the SkillsTag, which is then communicated
+to the Storage component.</p>
+</div>
+<div class="paragraph">
+<p>SkillsTag in Logic component communicates to the CSS file in the GUI to change the color.</p>
+</div>
+<div class="paragraph">
+<p>The color attribute is then modeled as a JsonAdaptedTag in the Storage component.</p>
+</div>
+<div class="paragraph">
+<p><strong>IMPORTANT NOTE</strong> the current implementation works with the JSON Constructor by adding a prefix to each <code>tagName</code>
+attribute that represents what tag type the object is. The strings 's:', 'p:', and 'e:' are prepended to each respective
+ skill, position, or endorse tag&#8217;s tagName attribute.</p>
+</div>
+<div class="paragraph">
+<p>Other commands such as filtering and sorting are currently integrated with this design approach and parse out the
+prefixes to get the correct tag names. This design helps the filter and sort commands differentiate between the three
+ tag types in order to properly display the results of their commands and improve user readability.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="alternate-implementation"><a class="link" href="#alternate-implementation">Alternate Implementation</a></h4>
+<div class="paragraph">
+<p><strong>Coming in v2.0</strong></p>
+</div>
+<div class="paragraph">
+<p>Logic Component Changes
+* Instead of representing tag type as an attribute of a SkillsTag object, a <code>Tag</code> interface will be implemented by
+distinct <code>SkillsTag</code>, <code>PositionTag</code>, <code>EndorseTag</code> objects.
+* The tags will have separate adapted JSON objects in order to correctly store the colors in the Storage component.
+* This will replace the current system of
+prepending tagName attributes with the respective tag type prefixes ('s:', 'p:', and 'e:').</p>
+</div>
+<div class="paragraph">
+<p>UI Component Changes
+* While the current implementation makes UI changes in the colors of the tags, the next implementation will have the
+separate tags featured on different lines instead of the current List of tags that has them in a random order.
+* The new view will improve the UI design to make the tags more organized and clear.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="endorse-command"><a class="link" href="#endorse-command">Endorse Command</a></h3>
+<div class="sect3">
+<h4 id="overview-2"><a class="link" href="#overview-2">Overview</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A command for the use of company employees that want to assist in the hiring process and find the candidates that
+will work best in their teams.</p>
+</li>
+<li>
+<p>The <code>endorse</code> command allows employees to select candidates by their index and create an endorsement tag to help
+candidates stand out in the recruiting platform.</p>
+</li>
+<li>
+<p>There is a complementary <code>'clear'</code> function for removing endorsement tags if an employee wants to rescind his
+recommendation.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EndorseCommandDiagram.png" alt="EndorseCommandDiagram" width="800">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">Current Implementation</a></h4>
+<div class="paragraph">
+<p>Endorsing mechanism is facilitated by <code>AddressBook</code>. Like other commands, the Logic Manager parses the user input and
+recognizes the 'endorse' keyword as the user calling the <code>endorse</code> command and sending the arguments to the
+<code>EndorseCommandParser</code>. The parser then interprets the specified index as an <code>Index</code> object and identifies the
+candidate to endorse. A new tag of type 'endorse' is created and added to the set of tags associated
+with the specific <code>Person</code> object. The tag is shaded teal to represent an endorsement and a "e:" prefix is added to the
+tag name in order
+to save the color correctly as a <code>JsonAdaptedTag</code> (as described in Section 3.2: Colored Tags).</p>
+</div>
+<div class="paragraph">
+<p><strong>Clearing Endorsements</strong></p>
+</div>
+<div class="paragraph">
+<p>Endorsing can be reversed through the <code>'clear'</code> keyword. When an employee has previously endorsed a candidate and
+then wants to remove that endorsement, he or she can include 'clear' in their endorse command input before the index
+is specified. The <code>EndorseCommandParser</code> recognizes the clear command and specifies that this is a clearing process
+in the instantiation of a new <code>EndorseCommand</code> object. To specify a normal endorse command, the <code>EndorseCommand</code>
+object is passed a process code of 0 in the constructor and a process code of 1 to show that a clearing command has
+been called. The object recognizes the passing of a clearing process and removes the tag of the specified employee in
+ the <code>Person</code> class.</p>
+</div>
+<div class="paragraph">
+<p><strong>Incorporation With Other Commands</strong></p>
+</div>
+<div class="paragraph">
+<p><em><strong>Add and Edit Commands</strong></em></p>
+</div>
+<div class="paragraph">
+<p>The add command does not have prefixes for creating endorsement tags so that candidates cannot add any company
+endorsements when they <code>add</code> themselves to the platform or when they <code>edit</code> their profile.</p>
+</div>
+<div class="paragraph">
+<p>Because endorsements are only created and removed by employees, they are saved as part of the candidate profile and
+cannot be changed by a candidate editing their skills and position tags. If a candidate adds or removes tags from
+their profile, any employee endorsements that they have received will be maintained.</p>
+</div>
+<div class="paragraph">
+<p><em><strong>Filter and Sort Commands</strong></em></p>
+</div>
+<div class="paragraph">
+<p>In order for the command to be functional in a filtered or sorted view, the candidate is found in the model through
+the filtered persons list. When a user filters by specified parameters and/or sorts the results by a
+profile characteristic, using the endorse command on the new indexed results will still result in a successful
+endorsement of the correct candidate.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="endorse-command-tests"><a class="link" href="#endorse-command-tests">Endorse Command Tests</a></h4>
+<div class="paragraph">
+<p>Tests the implementation of the endorse command and the endorse clear command. Checks that the endorse command
+correctly creates an endorsement tag and endorses the correct indexed person. Also checks that the endorse clear
+command removes an endorsement tag from the correct indexed person.
+The following use cases are tested:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Endorses the correct index and correct person at the specified index</p>
+</li>
+<li>
+<p>Clears endorsement of correct person at the correct index</p>
+</li>
+<li>
+<p>Accepts a valid employee name</p>
+</li>
+<li>
+<p>Accepts a valid integer as the index</p>
+</li>
+<li>
+<p>Cannot endorse a candidate more than once</p>
+</li>
+<li>
+<p>Cannot clear an endorsement that has never been made</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="alternate-implementation-2"><a class="link" href="#alternate-implementation-2">Alternate Implementation</a></h4>
+<div class="paragraph">
+<p><em>Coming in v2.0</em></p>
+</div>
+<div class="paragraph">
+<p>Separating exclusive features for different users so that only candidates can change their skills and only employees
+can endorse candidates. We will differentiate the experiences that the distinct users (candidates,
+recruiters, and employees) can have with the platform and make a more individual view for each person. Distinguishing
+ which user is using the system will allow us to prevent some users from using functions that are only meant for
+ others, such as candidates using the endorse function or employees editing a candidate profile.</p>
+</div>
 <div class="paragraph">
 <p>include::../DeveloperGuide.adoc</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="project-powerpointlabs"><a class="link" href="#project-powerpointlabs">PROJECT: PowerPointLabs</a></h2>
-<div class="sectionbody">
-<hr>
-<div class="paragraph">
-<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
 </div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:39:40 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:44:18 UTC</div></div></div></body></html>
