@@ -1078,9 +1078,6 @@ parameter is added to AddressBook class, all the functions have to be changed co
 <p>It is hard and time consuming to implement this approach because <code>Predicates</code> are used. In <code>AddressBook</code> class itself, we can directly reach to the persons and their all fields easily. But with <code>Predicate</code> approach,
 it requires additional data to be built (<code>Predicates</code> may need to be created before adding new persons to the parameter). Moreover, we do not have much knowledge about <code>Predicate</code> usage and because of these reasons, our job may take more time to finish.</p>
 </li>
-<li>
-<p>It may require some changes in the <code>Model</code> class.</p>
-</li>
 </ul>
 </div>
 </li>
@@ -1124,47 +1121,7 @@ However in the alternative approach, implementing the input taking with no order
 </div>
 </div>
 <div class="sect3">
-<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.3. Combining the Command With Other Commands</a></h4>
-<div class="paragraph">
-<p>Since a new parameter is added to the <code>AddressBook</code> class, some changes should have done to adjust the existing processes to
-be used at the same time with filtering commands.</p>
-</div>
-<div class="sect4">
-<h5 id="undo-redo-command"><a class="link" href="#undo-redo-command">Undo/Redo Command</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>A new local boolean parameter is added to the <code>AddressBook</code> class to hold if in that step the filtering exists or not. This addition is important for not losing the filtering information, not losing the storage data as a result of <code>undo/redo</code> processes, when filtering is active and being able to use <code>clearFilter()</code>, if undo and redo commands are used when filtering is active.</p>
-</li>
-<li>
-<p><code>resetData</code> method is modified in order to reset the <code>allPersonsStorage</code> parameter if needed.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="add-edit-and-delete-commands"><a class="link" href="#add-edit-and-delete-commands">Add, Edit and Delete Commands</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>delete</code> and <code>edit</code> processes are working without clearing the filter.</p>
-</li>
-<li>
-<p><code>add</code> method clears the filter when a new person is added. Because, all the previous filtering are not saved in anywhere, so we cannot control if the newly added person matches
-with the filtering criterion. Thus, all the filtering is cleared.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="other-commands"><a class="link" href="#other-commands">Other Commands</a></h5>
-<div class="paragraph">
-<p>These are the ones that requires almost no changes or only small amount of changes to be compatible with filtering.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.4. Testing of Filter Command Design</a></h4>
+<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.3. Testing of Filter Command Design</a></h4>
 <div class="paragraph">
 <p>The testing methods for filtering is written for 3 different parts:</p>
 </div>
@@ -1237,6 +1194,46 @@ with the filtering criterion. Thus, all the filtering is cleared.</p>
 <p>Also for every interacting command, <strong>failure</strong> and <strong>success</strong> cases are both investigated.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.4. Combining the Command With Other Commands</a></h4>
+<div class="paragraph">
+<p>Since a new parameter is added to the <code>AddressBook</code> class, some changes should have done to adjust the existing processes to
+be used at the same time with filtering commands.</p>
+</div>
+<div class="sect4">
+<h5 id="undo-redo-command"><a class="link" href="#undo-redo-command">Undo/Redo Command</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>A new local boolean parameter is added to the <code>AddressBook</code> class to hold if in that step the filtering exists or not. This addition is important for not losing the filtering information, not losing the storage data as a result of <code>undo/redo</code> processes, when filtering is active and being able to use <code>clearFilter()</code>, if undo and redo commands are used when filtering is active.</p>
+</li>
+<li>
+<p><code>resetData</code> method is modified in order to reset the <code>allPersonsStorage</code> parameter if needed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="add-edit-and-delete-commands"><a class="link" href="#add-edit-and-delete-commands">Add, Edit and Delete Commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>delete</code> and <code>edit</code> processes are working without clearing the filter.</p>
+</li>
+<li>
+<p><code>add</code> method clears the filter when a new person is added. Because, all the previous filtering are not saved in anywhere, so we cannot control if the newly added person matches
+with the filtering criterion. Thus, all the filtering is cleared.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="other-commands"><a class="link" href="#other-commands">Other Commands</a></h5>
+<div class="paragraph">
+<p>These are the ones that requires almost no changes or only small amount of changes to be compatible with filtering.</p>
 </div>
 </div>
 </div>
@@ -3058,4 +3055,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 11:01:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 11:12:18 UTC</div></div></div></body></html>
