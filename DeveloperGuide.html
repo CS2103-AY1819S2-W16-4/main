@@ -30,7 +30,7 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#filter-or-and-clear-feature">3.2. Filter or/and/clear feature</a></li>
+<li><a href="#filter-or-and-clear-reverse-feature">3.2. Filter or/and/clear/reverse feature</a></li>
 <li><a href="#sort-commands">3.3. Sort Commands</a></li>
 <li><a href="#endorse-command">3.4. Endorse Command</a></li>
 <li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
@@ -710,119 +710,393 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="filter-or-and-clear-feature"><a class="link" href="#filter-or-and-clear-feature">3.2. Filter or/and/clear feature</a></h3>
+<h3 id="filter-or-and-clear-reverse-feature"><a class="link" href="#filter-or-and-clear-reverse-feature">3.2. Filter or/and/clear/reverse feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p><strong>Usage Format Regarding Current Implementation:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Format 1:</strong> <code>filter or/and [name&lt;NAME&gt;name] [phone&lt;PHONE&gt;phone] [email&lt;EMAIL&gt;email] [gpa&lt;GPA&gt;gpa] [edu&lt;EDUCATION&gt;edu] [deg&lt;DEGREE-LEVEL&gt;deg] [addr&lt;ADDRESS&gt;addr] [skill&lt;SKILL1, SKILL2, &#8230;&#8203; &gt;skill][pos&lt;POSITION1, POSITION2, &#8230;&#8203; &gt;pos] [end&lt;ENDORSEMENT-COUNT&gt;end]</code></p>
+</li>
+<li>
+<p><strong>Format 2:</strong> <code>filter clear/reverse</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Basic Definitions Before the Actual Implementation Explanation:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>PREFIX:</code></strong> For every single field (name, phone, email etc.), the leading combination of characters which indicate that the data for that field will be entered beginning from that location of the input.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. for name field <code>name&lt;</code>, for gpa field <code>gpa&lt;</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>REVERSE PREFIX:</code></strong> For every single field, the combination of terminating characters which indicate that the data for that field will be stopped after that location of the input.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. for email field &gt;email`, for skills field <code>&gt;skill</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>CRITERIA/CRITERION:</code></strong> These are the texts that are between 'PREFIX' and 'REVERSE PREFIX'</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. for the input <code>filter and deg&lt;bachelors&gt;deg phone&lt;95&gt;phone</code>, the criterion are <code>bachelors</code> and <code>95</code>.</p>
+</li>
+<li>
+<p>all the criterion possible for filtering are: <code>NAME, PHONE, EMAIL, GPA, EDUCATION, DEGREE-LEVEL, ADDRESS, SKILLS</code> (It can have multiple criterion inside of it, e.g. <code>skill&lt;C, Java&gt;skill has 2 criterion C and Java</code>), <code>POSITIONS</code> (same situation with SKILLS), <code>ENDORSEMENT-COUNT</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Differences of 4 Types of Filter Commands:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>AND:</code></strong> This type of command is used for only showing the persons that passes all the criterion given in the input.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. if input is <code>filter and edu&lt;NUS&gt;edu pos&lt;Manager, Developer&gt;pos</code>, only the persons, who have studied in <code>NUS</code> and applied for both <code>Manager and Developer</code> positions, will be shown.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>OR:</code></strong> This type of command is used for only showing the persons that passes at least one of the criterion given in the input.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. if input is <code>filter or</code> <code>addr&lt;Singapore&gt;addr</code> <code>skill&lt;C, Java&gt;skill</code>, only the persons who live in <code>Singapore</code> or knows about the skills that contain <code>C or Java</code> will be shown</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>CLEAR:</code></strong> If a filtering is applied before and the currently viewed list is a filtered list of persons, then this type clears all the active filtering and shows all the persons in the storage.</p>
+</li>
+<li>
+<p><strong><code>REVERSE:</code></strong> If a filtering is applied before, this command shows only the persons that are eliminated with the previous filtering conditions. Basically, it reverses the filter.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. if input is <code>filter reverse</code> and if there are 11 persons in the total storage but only 7 are shown since there is a filtering, this type shows only the 4 other persons that were not shown.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Filtering Approaches for Every Single Field:</strong></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Although in some fields, any ASCII character can be taken as inputs, using <code>&lt; or &gt;</code> can cause false results. Please do not use them in your filtering inputs for the criterion fields.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+All the text searches are case-insensitive. That means, if the input is <code>in</code> for example, all these texts will be matched with the input: <code>In, in, iN, IN</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Below, the word <strong>contained</strong> is used a lot. This word means that, if the input is a substring of the searched value for the looked person, the input is contained.<br>
+e.g. if the input is <code>ale</code> for the name, all the persons will be chosen, who have at least one of the uppercase and lowercase combination of the input <code>ale</code> in their names as a substring.<br>
+e.g. if the input is <code>ale</code>, the person with the name <code>Alex, aLex, ALEX, alexandra etc.</code> will be matched.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>NAME:</code></strong> It can take any English alphabet character and also <code>space</code> character. It checks if the entered criteria is <strong>contained</strong> in the names of the persons in the list.</p>
+</li>
+<li>
+<p><strong><code>PHONE:</code></strong> It can take any positive number, controls if the entered criteria is <strong>contained</strong> in the phones of the persons in the list.</p>
+</li>
+<li>
+<p><strong><code>EMAIL and ADDRESS:</code></strong> It can take any number of ASCII characters more than 0. Controls if the entered criteria is <strong>contained</strong> in the emails/addresses of the persons in the list.</p>
+</li>
+<li>
+<p><strong><code>GPA:</code></strong> It takes a positive <code>integer</code> or <code>float</code> value between 0 and 4. Shows the persons with higher or equal GPA values from the given criteria.</p>
+</li>
+<li>
+<p><strong><code>EDUCATION:</code></strong> It can take any English alphabet character and also <code>space</code> character. It checks if the entered criteria is <strong>contained</strong> in the school/education of the persons in the list.</p>
+</li>
+<li>
+<p><strong><code>SKILLS and POSITIONS:</code></strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It can take any number of ASCII characters more than 0 (except "," in the <code>skill/position</code> itself).</p>
+</li>
+<li>
+<p>Multiple <code>skills/positions</code> can be entered with using one <code>PREFIX</code> and one <code>REVERSE PREFIX</code> as long as the <code>skills/positions</code> are separated with ",".</p>
+</li>
+<li>
+<p>Controls, if the given <code>skills/positions</code> are <strong>contained</strong> in the actual <code>skills/positions</code> of the persons in the list.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>ENDORSEMENT-COUNT:</code></strong> It takes a positive <code>integer</code>. If the given number as an input is less than or equal to the number of endorsements (it is just the process, where a person recommended by someone) the person has, then this person is shown.</p>
+</li>
+<li>
+<p><strong><code>DEGREE-LEVEL:</code></strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The input for this field can take an <code>integer</code> between 0 and 4 (they are included) or a text, which can be either <code>highschool</code> or <code>associates</code> or <code>bachelors</code> or <code>masters</code> or <code>phd</code>.</p>
+</li>
+<li>
+<p>Order of <code>integers</code> are matched with the order of texts given. In other words, input 0 also means <code>highschool</code>, 1 means <code>associates</code>, 2 means <code>bachelors</code> etc.</p>
+</li>
+<li>
+<p>In this filtering field, it is controlled that if the entered degree level is a lower or an equal level than the one for the searched person, the person will be shown in the list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Implementation Details:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Class Diagram of the Filtering Command:</strong></p>
+</li>
+</ul>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="images/filterDiagram.png" alt="filterDiagram" width="800">
+<img src="images/class-diagram-filter.png" alt="class diagram filter" width="800">
 </div>
-</div>
-<div class="paragraph">
-<div class="title">Sequence Diagram of the Filtering Command</div>
-<p>Filtering mechanism is facilitated by <code>AddressBook</code>.
-In the AddressBook class, we have added a new <code>UniquePersonsList</code> parameter called <code>allPersonsStorage</code> and this parameter stores also the persons in the application.
-When the filtering method is used, the <code>persons</code> parameter in the class is updated according to the filtering criterion (the persons that are not matching the conditions are removed)
-but the list in the new parameter <code>allPersonsStorage</code> are not changed. At the end, when the filtering is cleared, the <code>persons</code> parameter is updated with the information in <code>allPersonsStorage</code>.
-If user exits the program when filtering is active, in the <code>stop</code> method of <code>MainApp</code> class, a new method is called that clears the filtering and saves all the persons to the <code>JSON</code> file, rather than filtered contacts.
-In filtering system, important processes are as follows:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>filter or [CRITERION]</code>&#8201;&#8212;&#8201;Filters the persons and includes the ones that has at least one match from the criterion.</p>
+<p><strong>Sequence Diagram of the Filtering Command:</strong></p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Every single one of the persons in the <code>persons</code> parameter is traversed.
-There is a flag that returns true for each person, if a criteria matches. For each criteria,
-the persons are investigated with contains method in a case insensitive manner. With case insensitivity,
-if one of the criterion is <code>Ale</code> for the name parameter, every person that contains <code>Ale</code> in their names are
-selected.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/sequence-diagram-filter.png" alt="sequence diagram filter" width="800">
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>filter and [CRITERION]</code>&#8201;&#8212;&#8201;Filters the persons and removes the ones that does not match even one of the criterion.</p>
+<p>Filtering is parsed in <code>FilterCommandParser</code> class, directed in <code>FilterCommand</code> class for further processing and actual filtering process took place in <code>AddressBook</code> class.</p>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Every single one of the persons in the <code>persons</code> parameter is traversed.
-There is a flag that returns false for each person, if a criteria does not match. For each criteria,
-the persons are investigated with contains method in a case insensitive manner. With case insensitivity,
-if one of the criterion is <code>Ale</code> for the name parameter, every person that contains <code>Ale</code> in their names are
-passed successfully from the name criteria.</p>
-</div>
+<li>
+<p><strong>Working Principle of <code>FilterCommandParser</code> Class</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The input is trimmed (spaces at the beginning and at the end are cleaned), cleared from multiple spaces and turned into lowercase form.</p>
+</li>
+<li>
+<p>By checking the first number of characters of the input, the type of the process is determined (<code>and</code>, <code>or</code>, <code>clear</code> or <code>reverse</code>) and stored in an <code>integer</code> value. If the input has none of them, an invalid input message is shown.</p>
+</li>
+<li>
+<p>Since there are 10 different fields that can be filtered, a <code>String array</code> with size 10, called <strong>criterion</strong>, is created and the values are set to " " in initialization.</p>
+</li>
+<li>
+<p>If the type is <code>clear</code> or <code>reverse</code>, a new <code>FilterCommand</code> object is called with passing the <code>criterion</code> array and the <code>process-type-holding-integer</code> for that method. If it is not, followings take place.</p>
+</li>
+<li>
+<p>The prefixes are searched. For each of the fields, these controls are made:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>filter clear</code>&#8201;&#8212;&#8201;Clears all the filtering that are active in current case</p>
+<p>Checked if the <code>PREFIX</code> exists in the input for the searched field.</p>
+</li>
+<li>
+<p>If it is, then <code>REVERSE PREFIX</code> for that field is also searched and if that is also found, it is checked that if the <code>PREFIX</code> is placed before <code>REVERSE PREFIX</code>.</p>
+</li>
+<li>
+<p>If it is not, or if the search cannot reach to this step, then an invalid input message is shown.</p>
+</li>
+<li>
+<p>If the steps are passed successfully, the element in the <code>criterion</code> array for this field will be changed to the value <code>"available"</code><br>
+e.g. if the input is <code>filter or phone&lt;57&gt;phone</code>, then the <code>PREFIX</code> and <code>REVERSE PREFIX</code> locations are correct, the 21st index (related index for the phone in the array) of the <code>criterion</code> will be set to <code>"available"</code>.</p>
+</li>
+<li>
+<p>Since the parser looks for the first occurrence of <code>PREFIX</code> and <code>REVERSE PREFIX</code>, if there are multiple filtering parts for the searched criteria, then the first one will be taken.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>As explained in the beginning part of the filtering method, the filter is cleared with restoring all the persons
-who are not in <code>persons</code> parameter but included in <code>allPersonsStorage</code> parameter</p>
+</li>
+<li>
+<p>For the available fields (the ones with the regarding <code>criterion</code> indexes are set to <code>"available"</code>), an input check is made for the the text between the <code>PREFIX</code> and <code>REVERSE PREFIX</code>. For the non-available filtering conditions, the value in <code>criterion</code> for the related field is set to <code>null</code>.</p>
+</li>
+<li>
+<p>If the parameters does not pass the input check, an error is thrown, which says the input is in invalid form. If they passes the input check, then the index for the regarding field in <code>criterion</code> array is set to the text value between the <code>PREFIX</code> and <code>REVERSE PREFIX</code>.<br>
+e.g. the 1st index of <code>criterion</code> is set to <code>57</code> regarding to the example above.</p>
+</li>
+<li>
+<p>FilterCommand function is called. In the parameters <code>criterion</code> and <code>process-type-holding-integer</code> passed to the object constructor.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Working Principle of <code>FilterCommand</code> Class</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>For each 10 fields of the filter command criterion, a <code>string</code> parameter is constructed and the values are set regarding the values in <code>criterion</code> array. If no value for that field is present, the parameter in the <code>FilterCommand</code> class is set to <code>null</code>.</p>
+</li>
+<li>
+<p>Since <code>SKILLS</code> and <code>POSITIONS</code> fields can contain more than one criterion inside (all the criterion are separated with ", " for these), the string values in <code>criterion</code> array regarding to those fields are split through "," usage and the data for these are stored in <code>String[]</code> parameters created in <code>FilterCommand</code> class, instead of <code>String</code> parameters.</p>
+</li>
+<li>
+<p>Also the type of the process (<code>and</code>, <code>or</code>, <code>clear</code> or <code>reverse</code>) is stored in a parameter in <code>FilterCommand</code>, too.</p>
+</li>
+<li>
+<p>According to the process type, one of the methods <code>filterAnd()</code>, <code>filterOr()</code>, <code>clearFilter()</code> or <code>reverseFilter()</code> is called through <code>Model</code> interface and these methods in <code>Model</code> also called the one of these methods in <code>AddressBook</code> class with the same name.</p>
+</li>
+<li>
+<p>For <code>filterAnd()</code> and <code>filterOr()</code> methods, the values for every single field are passed through the method call.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>e.g. if the <code>criterion</code> value is like that: <code>{"ale", null, "@gmail", "singapore", "c, java","manager", "2.7", "nus", "3", "3"}</code>, it is stored as:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>String name = "ale"</code></p>
+</li>
+<li>
+<p><code>String phone = null</code></p>
+</li>
+<li>
+<p><code>String email = "@gmail"</code></p>
+</li>
+<li>
+<p><code>String address = "singapore"</code></p>
+</li>
+<li>
+<p><code>String[] skills = ["c", "java"]</code></p>
+</li>
+<li>
+<p><code>String[] pos = ["manager"]</code></p>
+</li>
+<li>
+<p><code>String gpa = "2.7"</code></p>
+</li>
+<li>
+<p><code>String education = "nus"</code></p>
+</li>
+<li>
+<p><code>String endorseCount = "3"</code></p>
+</li>
+<li>
+<p><code>String degreeLevel = "3"</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>and all these parameters are passed to the <code>filterOr()</code> or <code>filterAnd()</code> methods.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Working Principle of <code>AddressBook</code> Class for Filtering Purposes</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>In the AddressBook class, a new <code>UniquePersonsList</code> parameter called <code>allPersonsStorage</code> is added.</p>
+</li>
+<li>
+<p>When the filtering method is used, the <code>persons</code> parameter in the class is updated according to the filtering criterion (the persons that are not matching the conditions are removed). However, in order not to lose data, the new added <code>allPersonsStorage</code> parameter is not being changed with the filtering processes. It still continues to store every single person in the application storage.</p>
+</li>
+<li>
+<p><strong>When clearFilter() method is called</strong>, if there is a filtering available, every single person who is not in <code>persons</code> parameter but in <code>allPersonsStorage</code> are added to the <code>persons</code> storage. So basically, it is right to say that <code>persons</code> parameter only holds the persons we expect to see in the GUI.</p>
+</li>
+<li>
+<p><strong>When reverseFilter() method is called</strong>, if there is a filtering available, every single person who is in <code>persons</code> parameter is replaced with the persons who were not stored in this parameter before.</p>
+</li>
+<li>
+<p><strong>When filterOr() method is called</strong>, every single person in <code>persons</code> parameter is traversed and the ones that do not contain <strong>none</strong> of the criterion set through input are removed from <code>persons</code>.</p>
+</li>
+<li>
+<p><strong>When filterAnd() method is called</strong>, every single person in <code>persons</code> parameter is traversed and the ones that do not contain <strong>even one</strong> of the criterion set through input are removed from <code>persons</code>.</p>
+</li>
+<li>
+<p>The information if there is a filtering available in the application, is also stored in a boolean parameter in <code>AddressBook</code> and set true with <code>filterAnd() and filterOr()</code> methods, set false with the initial launch of the application, <code>clearFilter()</code> call and <code>Add Command call</code> (because it increases the size of the data and it is not know that if the newly added person fits the filtering criterion or not).</p>
+</li>
+<li>
+<p>Filter-keeping-parameter is important, because with <code>undo and redo commands</code>, it is important to maintain the filtering state in order not to lose any data and in order to use <code>clearFilter()</code> method.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="working-principle-of-code-filtercommandparser-code-class"><a class="link" href="#working-principle-of-code-filtercommandparser-code-class">3.2.2. Working Principle of <code>FilterCommandParser</code> Class</a></h4>
-<div class="paragraph">
-<p>Filtering command is taken from the user as follows:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>filter or/and [n/NAME/n] [p/PHONE/p] [e/EMAIL/e] [g/GPA/g] [d/EDUCATION/d] [a/ADDRESS/a] [skill/ SKILL1, SKILL2, …​ /skill] [position/ POSITION1, POSITION2, &#8230;&#8203; /position]</code></p>
-</li>
-<li>
-<p><code>filter clear</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To process the input from user, these steps are followed in the code:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>first the input is cleared from multiple spaces or any unwanted additional forms.</p>
-</li>
-<li>
-<p>after that according to the first couple of the characters, the exact process is determined (If it is <code>add</code> or <code>or</code> or <code>clear</code>)</p>
-</li>
-<li>
-<p>if it is clear, the FilterCommand function is called fo that method. If it is not, followings take place.</p>
-</li>
-<li>
-<p>following that, the prefixes are searched. 5 flags are stored in <code>String</code> form for 5 different filtering conditions and
-if the prefix itself exists and the reverse version also exist and the prefix itself is before the reverse one the flag is turned
-to <code>available</code></p>
-</li>
-<li>
-<p>for the available parameters, the input is trimmed and separated from the prefixes. If the parameters does not match with the validity of the given type of the criteria,
-a message is printed to the screen and no action is made.</p>
-</li>
-<li>
-<p>FilterCommand function is called. In the parameters passed to the function, the process type, criterion flags and criterion contexts are included.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="alternative-approaches"><a class="link" href="#alternative-approaches">3.2.3. Alternative Approaches</a></h4>
+<h4 id="alternative-approaches"><a class="link" href="#alternative-approaches">3.2.2. Alternative Approaches</a></h4>
 <div class="paragraph">
 <p>In this title, both Command implementation and Parser implementation will be discussed in 2 parts:</p>
 </div>
 <div class="sect4">
 <h5 id="command-implementation"><a class="link" href="#command-implementation">Command Implementation</a></h5>
 <div class="paragraph">
-<p>Instead of adding another parameter in <code>AddressBook</code> called <code>allPersonsStorage</code>, another approach would be letting <code>persons</code> parameter to hold
-all the unfiltered information and updating <code>filteredPersons</code> parameter in the <code>ModelManager</code> class. However, in order to implement that approach
-we had to update the list in every time user uses filtering with a <code>Predicate</code> approach. Because, <code>FilteredList</code> class (the type of the <code>filteredPersons</code>
-parameter) uses these in very crucial parts of its implementation.</p>
+<p>Instead of adding another parameter in <code>AddressBook</code> class called <code>allPersonsStorage</code>, another approach would be letting <code>persons</code> parameter to hold
+all the unfiltered information and updating <code>filteredPersons</code> parameter in the <code>ModelManager</code> class. <code>filteredPersons</code> is a list of persons that is defined in <code>ModelManager</code>.
+It is especially used in <code>FindCommand</code>, that applies a basic filter to the list of persons in the application with only one criteria <code>NAME</code>.
+However, <code>filteredPersons</code> is implemented with <code>Predicate</code> approach.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -831,7 +1105,7 @@ parameter) uses these in very crucial parts of its implementation.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Does not need any additional parameter to be created in AddressBook class.</p>
+<p>Does not need any additional permanent parameter to be created in AddressBook class.</p>
 </li>
 <li>
 <p>Decreases the number of changes made in each list changing method of the AddressBook class. Because, if any additional
@@ -845,7 +1119,8 @@ parameter is added to AddressBook class, all the functions have to be changed co
 <div class="ulist">
 <ul>
 <li>
-<p>It is hard and time consuming to implement this approach. Actually that&#8217;s why we did not choose that approach.</p>
+<p>It is hard and time consuming to implement this approach because <code>Predicates</code> are used. In <code>AddressBook</code> class itself, we can directly reach to the persons and their all fields easily. But with <code>Predicate</code> approach,
+it requires additional data to be built (<code>Predicates</code> may need to be created before adding new persons to the parameter). Moreover, we do not have much knowledge about <code>Predicate</code> usage and because of these reasons, our job may take more time to finish.</p>
 </li>
 <li>
 <p>It may require some changes in the <code>Model</code> class.</p>
@@ -859,8 +1134,8 @@ parameter is added to AddressBook class, all the functions have to be changed co
 <div class="sect4">
 <h5 id="parser-implementation"><a class="link" href="#parser-implementation">Parser Implementation</a></h5>
 <div class="paragraph">
-<p>Instead of putting the criterion contents between both prefixes and reverse prefixes, like the addition process we
-could only add the content after the prefix (without any reverse prefix usage).</p>
+<p>Instead of putting the criterion contents between both <code>PREFIXES</code> and <code>REVERSE PREFIXES</code>, we
+could only add the content after <code>PREFIX</code> (without any <code>REVERSE PREFIX</code> usage) like the addition process .</p>
 </div>
 <div class="ulist">
 <ul>
@@ -883,7 +1158,7 @@ could only add the content after the prefix (without any reverse prefix usage).<
 </li>
 <li>
 <p>In currently implemented version, no order of the criterion is necessary. So, first phone number and then name etc. can be added for filtering condition.
-However in the alternative approach, implementing the input taking with no order is harder.</p>
+However in the alternative approach, implementing the input taking with no order is harder and time consuming.</p>
 </li>
 </ul>
 </div>
@@ -893,7 +1168,7 @@ However in the alternative approach, implementing the input taking with no order
 </div>
 </div>
 <div class="sect3">
-<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.4. Combining the Command With Other Commands</a></h4>
+<h4 id="combining-the-command-with-other-commands"><a class="link" href="#combining-the-command-with-other-commands">3.2.3. Combining the Command With Other Commands</a></h4>
 <div class="paragraph">
 <p>Since a new parameter is added to the <code>AddressBook</code> class, some changes should have done to adjust the existing processes to
 be used at the same time with filtering commands.</p>
@@ -903,8 +1178,7 @@ be used at the same time with filtering commands.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>To save the filtering information at each step, a new list is created to hold the filtering information at current stage (active or not)
-whenever the current AddressBook is pushed to the list.</p>
+<p>A new local boolean parameter is added to the <code>AddressBook</code> class to hold if in that step the filtering exists or not. This addition is important for not losing the filtering information, not losing the storage data as a result of <code>undo/redo</code> processes, when filtering is active and being able to use <code>clearFilter()</code>, if undo and redo commands are used when filtering is active.</p>
 </li>
 <li>
 <p><code>resetData</code> method is modified in order to reset the <code>allPersonsStorage</code> parameter if needed.</p>
@@ -916,9 +1190,6 @@ whenever the current AddressBook is pushed to the list.</p>
 <h5 id="add-edit-and-delete-commands"><a class="link" href="#add-edit-and-delete-commands">Add, Edit and Delete Commands</a></h5>
 <div class="ulist">
 <ul>
-<li>
-<p><code>commit</code> method is modified for transferring the filtering information to the stage after committing is made and also the filtering information is pushed to the list here</p>
-</li>
 <li>
 <p><code>delete</code> and <code>edit</code> processes are working without clearing the filter.</p>
 </li>
@@ -937,141 +1208,105 @@ with the filtering criterion. Thus, all the filtering is cleared.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.5. Testing of Filter Command Design</a></h4>
+<h4 id="testing-of-filter-command-design"><a class="link" href="#testing-of-filter-command-design">3.2.4. Testing of Filter Command Design</a></h4>
 <div class="paragraph">
 <p>The testing methods for filtering is written for 3 different parts:</p>
 </div>
 <div class="sect4">
 <h5 id="filtercommandparsertests"><a class="link" href="#filtercommandparsertests">FilterCommandParserTests</a></h5>
-<div class="paragraph">
-<p>Currently implemented test cases are below:</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>for missing parts of the input by the user, a test method runs. This method covers the situations where process type or field parameter or both are missing.</p>
+<p>This test class is prepared for unit testing of FilterCommandParser cass. With the tests:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The validity of inputs with single and multiple field are present are checked.</p>
 </li>
 <li>
-<p>second test method includes the cases where the prefix itself and the reverse prefix does not match with each other.</p>
+<p>The given order of inputs are checked in case of any possibility for an error.</p>
+</li>
+<li>
+<p>Empty command or <code>filter</code> command without any type specification are checked.</p>
+</li>
+<li>
+<p>The exceptions thrown are controlled, when the criterion are empty.</p>
+</li>
+<li>
+<p>For <code>number</code> type of criterion, the negative and positive out of bound values, entering string values and entering valid values are checked.</p>
+</li>
+<li>
+<p>For <code>String</code> type of criterion, the type of characters allowed are checked.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>For future release test cases:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Division of the unordered input for different criterion will be tested</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="filtercommandtests"><a class="link" href="#filtercommandtests">FilterCommandTests</a></h5>
-<div class="paragraph">
-<p>This test class is prepared for unit testing of Filtering Command. Currently implemented test cases are below:</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>executing filtering with only 1 condition</p>
+<p>This test class is prepared for unit testing of Filtering Command. With these tests Filtering process are checked:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>when a single or multiple criterion are given,</p>
 </li>
 <li>
-<p>executing filtering with multiple conditions</p>
+<p>when filtering occurs multiple times,</p>
 </li>
 <li>
-<p>executing filtering with all the criterion are given</p>
+<p>when type is <code>clear</code> or <code>reverse</code> and there are no/one/multiple filters are applied before.</p>
 </li>
-<li>
-<p>clearing the filtering when one filter is active</p>
-</li>
-<li>
-<p>clearing the filtering when multiple filters are active</p>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="filtercommandintegrationtests"><a class="link" href="#filtercommandintegrationtests">FilterCommandIntegrationTests</a></h5>
-<div class="paragraph">
-<p>This test class contains integration tests (interaction with the Model, UndoCommand, RedoCommand, AddCommand, DeleteCommand, SortCommand) for FilterCommand.
-Currently, no test cases are prepared but next release these test methods will be implemented:</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>executing sorting after filtering once</p>
-</li>
-<li>
-<p>executing sorting after filtering twice</p>
-</li>
-<li>
-<p>executing undo and redo after filtering once</p>
-</li>
-<li>
-<p>executing undo and redo after filtering twice</p>
-</li>
-<li>
-<p>executing undo after filtering is cleared</p>
-</li>
-<li>
-<p>executing delete after filtering once</p>
-</li>
-<li>
-<p>executing delete after filtering twice</p>
-</li>
-<li>
-<p>executing add after filtering once</p>
-</li>
-<li>
-<p>executing add after filtering twice</p>
-</li>
-<li>
-<p>a complex case of different processes combined: The flow will be as follows for the next test:</p>
+<p>This test class contains integration tests and investigates the interaction of <code>FilterCommand</code> with:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>1- filter and</p>
+<p><code>UndoCommand</code>,</p>
 </li>
 <li>
-<p>2- filter or</p>
+<p><code>RedoCommand</code>,</p>
 </li>
 <li>
-<p>3- sort alphabetical</p>
+<p><code>AddCommand</code>,</p>
 </li>
 <li>
-<p>4- delete 1</p>
+<p><code>DeleteCommand</code>,</p>
 </li>
 <li>
-<p>5- undo</p>
+<p><code>SortCommand</code>,</p>
 </li>
 <li>
-<p>6- undo</p>
+<p><code>FindCommand</code>,</p>
 </li>
 <li>
-<p>7- redo</p>
+<p><code>SelectCommand</code>,</p>
 </li>
 <li>
-<p>8- filter clear</p>
-</li>
-<li>
-<p>9- undo</p>
-</li>
-<li>
-<p>10- add &#8230;&#8203;</p>
-</li>
-<li>
-<p>11- filter clear</p>
-</li>
-<li>
-<p>12-undo</p>
-</li>
-<li>
-<p>13- filter clear</p>
+<p>and cases, when all of them are together.</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>Each test case at least contains filtering with <code>or - success</code> or <code>and - success</code>, <code>clear - success</code> and <code>clear - failure</code>, <code>reverse - success</code> and <code>reverse - failure</code>.</p>
+</li>
+<li>
+<p>Also for every interacting command, <strong>failure</strong> and <strong>success</strong> cases are both investigated.</p>
 </li>
 </ul>
 </div>
@@ -2895,4 +3130,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 04:58:20 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 10:08:08 UTC</div></div></div></body></html>
