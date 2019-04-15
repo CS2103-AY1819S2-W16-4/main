@@ -544,16 +544,43 @@ skill is that which appears first when the person&#8217;s skills have been order
 </ul>
 </div>
 <div class="paragraph">
-<p>Methodology:</p>
+<p>Methodology:
+.Individual Sort Command Methods</p>
 </div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Sort Comparison</th>
+<th class="tableblock halign-left valign-top">Sort Effect</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compares the Christian name first and then the surname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>`Adam Smith` shall come before <code>Shaun Adams</code> and <code>Adam Blacksmith</code> shall come before <code>Adam Smith</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort surname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compares the surname only</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alphabetical</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>`Ben Adams` shall come before <code>Adam Black</code>.</em></p></td>
+</tr>
+</tbody>
+</table>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
-<li>
-<p>The <code>sort name</code> command compares the Christian name first and then the surname.<br>
-<em>e.g. <code>Adam Smith</code> shall come before <code>Shaun Adams</code> and <code>Adam Blacksmith</code> shall come before <code>Adam Smith</code>.</em></p>
-</li>
 <li>
 <p>The <code>sort surname</code> command compares the surname only.<br>
 If two surnames match, then the previous relative ordering of the two shall be kept.<br>
@@ -1055,4 +1082,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 11:08:05 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 04:58:20 UTC</div></div></div></body></html>
